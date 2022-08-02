@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 const app = express(); // Permet de créer une application express
 
@@ -22,5 +23,6 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/api/auth', userRoutes);
 
 module.exports = app; // Exportation de la const "app" pour y acceder depuis les autres fichiers du projet
