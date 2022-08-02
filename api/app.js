@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
+const path = require('path'); // Le module path fournit des utilitaires pour travailler avec les chemins de fichiers et de répertoires.
 
 const app = express(); // Permet de créer une application express
 

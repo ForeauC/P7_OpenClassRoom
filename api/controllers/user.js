@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ncrypt = require('ncrypt-js');
+const user = require('../models/user');
 const secretKey = "test";
 const ncryptObject = new ncrypt(secretKey); // Librairie  légère de chiffrement et de déchiffrement de données javascript.
 const dotenv = require('dotenv').config();
@@ -38,7 +39,7 @@ exports.login = (req, res, next) => {
                     userId: user._id,
                     token: jwt.sign( // À l'intérieur nous dictons les données que nous souhaitons encoder dans ce toker (payload).
                         { userId: user._id }, // Données que l'on veut encoder -> payload. Le UserId est encodé car on ne veut pas qu'un user soit en capacité de modifier les informations d'un autres UserId.
-                        MONGODB_TOKEN, // Clef secrete pour l'encodage. En production, on utiliserait une chaîne de caractère beaucoup plus longue et aléatoire.
+                        process.env.MONGODB_TOKEN, // Clef secrete pour l'encodage. En production, on utiliserait une chaîne de caractère beaucoup plus longue et aléatoire.
                         { expiresIn : '24h' } // Configuration : chaque Token durera 24h
                     )
                 });
