@@ -1,143 +1,150 @@
 <template>
-    <div id="form__connect" class="form__container">
-        <div id="form__tab" class="form__container-tab" >
-            <button class="form__tab form__active-tab" >Incription</button>
-            <button class="form__tab">Connection</button>
+    <div class="connect__container">
+        <div class="h1_container">
+            <h1>Votre espace pour partagez et restez en contact avec vos collègues !!</h1>
         </div>
-        <form id="panel-1" class="form__tab-content form__active-tab-content">
-            <div class="form__userName form">
-                <label for="userName">Veuillez renseignez votre nom de profil</label>
-                <input name="userName" v-model="email" placeholder="userName">
+        <div class="card__container">
+            <div class="card">
+                <h2 class="card__title" v-if="mode == 'login'">Connexion</h2>
+                <h2 class="card__title" v-else>Inscription</h2>
+                <p class="card__subtitle" v-if="mode == 'login'">Tu n'as pas encore de compte ? <span class="card__action"      @click="switchToCreateAccount()">Créer un compte</span></p>
+                <p class="card__subtitle" v-else>Tu as déjà un compte ? <span class="card__action" @click="switchToLogin()">Se connecter</span></p>
+                <div class="form-row">
+                    <input v-model="email" class="form-row__input" type="text" placeholder="Adresse mail"/>
+                </div>
+                <div class="form-row" v-if="mode == 'create'">
+                    <input v-model="userName" class="form-row__input" type="text" placeholder="Nom de profil"/>
+                </div>
+                <div class="form-row">
+                    <input v-model="password" class="form-row__input" type="password" placeholder="Mot de passe"/>
+                </div>
+                <div class="form-row">
+                <button class="button" :class="{'button--disabled' : !validatedFields}" v-if="mode == 'login'">
+                    <span>Se connecter</span>
+                </button>
+                <button class="button" :class="{'button--disabled' : !validatedFields}" v-else>
+                    <span>Créer mon compte</span>
+                </button>
+                </div>
             </div>
-            <div class="form__email form">
-                <label for="email">Veuillez renseignez votre email</label>
-                <input name="email" v-model="email" placeholder="Email">
-            </div>
-            <div class="form__password form">
-                <label for="password">Veuillez renseignez votre mot de passe</label>
-                <input name="password" v-model="password" placeholder="Mot de passe" type="password">
-            </div>
-            <div class="button">
-                <input class="button__submit" type="submit" value="Se connecter">
-            </div>
-        </form>
-
-        <form id="panel-2" class="form__tab-content">
-            <div class="form__email form">
-                <label for="email">Veuillez renseignez votre email</label>
-                <input name="email" v-model="email" placeholder="Email">
-            </div>
-            <div class="form__password form">
-                <label for="password">Veuillez renseignez votre mot de passe</label>
-                <input name="password" v-model="password" placeholder="Mot de passe" type="password">
-            </div>
-            <div class="button">
-                <input class="button__submit" type="submit" value="Se connecter">
-            </div>
-        </form>
+        </div>
     </div>
 
 </template>
 
 <script>
 export default {
-    
+    name: "FormConnect",
+    data: function () {
+    return {
+      mode: 'login',
+      email: '',
+      userName: '',
+      password: '',
+    }
+    },
+    computed: {
+        validatedFields: function () {
+        if (this.mode == 'create') {
+            if (this.email != "" && this.userName != "" && this.password != "") {
+            return true;
+            } else {
+            return false;
+            }
+        } else {
+            if (this.email != "" && this.password != "") {
+            return true;
+            } else {
+            return false;
+            }
+        }
+        },
+    },
+    methods: {
+        switchToCreateAccount: function () {
+        this.mode = 'create';
+        },
+        switchToLogin: function () {
+        this.mode = 'login';
+        }
+    }
 }
+
 </script>
 
 <style scoped>
 
-.form__container {
-    background-color: #FFFFFF;
-    max-width: 600px;
-    margin: 50px auto 0;
-    border-radius: 20px;
-    color: #707070;
-    display: grid;
-    grid-template-rows: min-content 1fr;
-}
-.form__container-tab {
-    display: flex;
-    border-bottom: 1px solid #ffffff3e;
-}
-.form__tab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    background-color: #7096AA;
-    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.181) inset;
-    color: #FFFFFF;
-    flex-basis: 100%;
-    font-size: clamp(16px, 2vw, 20px);
-    font-weight: 700;
-    padding: 30px 0;
-    cursor: pointer;
-}
-
-.form__tab:nth-child(1) {
-    border-top-left-radius: 19px;
-}
-.form__tab:nth-child(2) {
-    border-top-right-radius: 19px;
-}
-
-.form__tab-content {
-    grid-area: 2 / 1 / 3 / 2;
-    padding: clamp(35px, 3vw, 40px);
-    min-height: 200px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease-out;
-}
-
-
-/* Animations */
-.form__active-tab {
-    background-color: #FFFFFF;
-    box-shadow: none;
-    color: #707070;
-    font-weight: bolder;
-}
-.form__active-tab-content {
-    visibility: visible;
-    opacity: 1;
-}
-
-.form{
-    display:flex;
-    flex-direction: column;
-    padding: 10px;
+h1{
     text-align: center;
-    margin: 0 auto;
+    padding-left: 30px;
+    color: #7096AA;
 }
 
-.form label{
+h2{
+    text-align: center;
+    color: #7096AA;
+    font-size: 28px;
+    padding-top: 20px;
     padding-bottom: 10px;
 }
 
-.form input{
-    width: 60%;
-    margin: 0 auto;
-    padding: 10px;
+hr{
+    width: 80%;
     text-align: center;
-    border: 1px solid #7096AA;
+}
+
+.connect__container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.h1_container{
+    width: 50%;
+}
+
+.card__container{
+    width: 50%;
+}
+
+.card {
+    background-color: #FFFFFF;
+    max-width: 500px;
+    margin: 50px auto 0;
     border-radius: 20px;
+    color: #707070;
+}
+.card__subtitle{
+    padding-left: 20px;
+}
+.card__action{
+    color:#7096AA;
+    cursor: pointer;
+}
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin: 20px
+    
+  }
+.form-row__input {
+  padding:15px;
+  border: none;
+  border-radius: 8px;
+  background:#F2F2F2;
+  font-weight: 500;
+  font-size: 16px;
+  min-width: 100px;
 }
 
 .button{
-    text-align: center;
-    padding-top: 20px;
- 
-}
-
-.button__submit{
+    margin: 20px auto 40px;
     width: 150px;
     background-color: #7096AA;
     color: #FFFFFF;
     border: none;
     border-radius: 20px;
-    padding: 10px
+    padding: 20px
 }
 
 </style>

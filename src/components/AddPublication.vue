@@ -6,7 +6,7 @@
         </div>
         <p class="card__caption">Ajouter une légende :</p>
         <div class="card__input-container">
-            <input class="card__input" type="texte">
+            <textarea class="card__input"></textarea>
         </div>
         <div class="card__button">
             <button class="card__button-submit button">Publier</button>
@@ -15,7 +15,10 @@
 </template>   
 
 <script>
-
+export default {
+    name: "Publication",
+    
+}
 </script>
 
 <style scoped>

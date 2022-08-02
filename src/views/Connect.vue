@@ -1,6 +1,6 @@
 <template>
 
-    <div class="profil">
+    <div class="connect">
         <FormConnect/>
     </div>
     
