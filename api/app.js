@@ -24,6 +24,8 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'images'))); // Cela indique à Express qu'il faut gérer la ressource images de manière statique (un sous-répertoire de notre répertoire de base, __dirname ) à chaque fois qu'elle reçoit une requête vers la route /images .
+
 app.use('/api/auth', userRoutes);
 
 module.exports = app; // Exportation de la const "app" pour y acceder depuis les autres fichiers du projet
