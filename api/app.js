@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
+const publicationRoutes = require('./routes/publication');
 const path = require('path'); // Le module path fournit des utilitaires pour travailler avec les chemins de fichiers et de répertoires.
 
 const app = express(); // Permet de créer une application express
@@ -27,5 +28,6 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images'))); // Cela indique à Express qu'il faut gérer la ressource images de manière statique (un sous-répertoire de notre répertoire de base, __dirname ) à chaque fois qu'elle reçoit une requête vers la route /images .
 
 app.use('/api/auth', userRoutes);
+app.use('/api/publication', publicationRoutes); // Le début de la route est défini juste ici
 
 module.exports = app; // Exportation de la const "app" pour y acceder depuis les autres fichiers du projet
