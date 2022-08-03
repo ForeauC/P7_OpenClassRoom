@@ -8,4 +8,4 @@ const publicationSchema = mongoose.Schema({ // Nous créons un schéma de donné
     usersLiked : { type : Array, required : true },
 });
 
-module.exports = mongoose.model('Publication', publicationSchema); // Permet d'exporter le modèle Mongoose, le rendant par là même disponible pour notre application Express.
+module.exports = mongoose.model('Publication', publicationSchema); // Permet d'exporter le modèle Mongoose, le rendant par là même disponible poÒ
