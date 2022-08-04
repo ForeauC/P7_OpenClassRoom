@@ -34,3 +34,22 @@ exports.modifyPublication = (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Publication modifié avec succés' }))
     .catch(error => res.status(400).json({ error: error }));
 };
+
+exports.deletePublication = (req, res, next) => {
+    Publication.findOne({ _id: req.params.id }) // On trouve l'objet dans la BDD
+    .then(publication => {
+        if (!publication) {
+            res.status(404).json({ error: new Error('Erreur') });
+        }
+        if (publication.userId !== req.auth.userId) {
+            res.status(400).json({ error: new Error('Requète non authorisé!') });
+        } 
+      const filename = publication.imageUrl.split('/images/')[1]; // Une fois trouvé, on extrait le nom du fichier à supprimer
+      fs.unlink(`images/${filename}`, () => { // On le supprime avec fs.unlink
+        Publication.deleteOne({ _id: req.params.id })
+            .then(() => res.status(204).json({ message: 'Publication supprimé !'}))
+            .catch(error => res.status(400).json({ error }));
+            });
+        })
+    .catch(error => res.status(400).json({ error }));
+};
