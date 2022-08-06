@@ -13,17 +13,25 @@
                     <input v-model="email" class="form-row__input" type="text" placeholder="Adresse mail"/>
                 </div>
                 <div class="form-row" v-if="mode == 'create'">
-                    <input v-model="userName" class="form-row__input" type="text" placeholder="Nom de profil"/>
+                    <input v-model="profileName" class="form-row__input" type="text" placeholder="Nom de profil"/>
                 </div>
                 <div class="form-row">
                     <input v-model="password" class="form-row__input" type="password" placeholder="Mot de passe"/>
                 </div>
+                <div class="form-row" v-if="mode == 'login' && status == 'error_login'">
+                Adresse mail et/ou mot de passe invalide
+                </div>
+                <div class="form-row" v-if="mode == 'create' && status == 'error_create'">
+                Adresse mail déjà utilisée
+                </div>
                 <div class="form-row">
-                <button class="button" :class="{'button--disabled' : !validatedFields}" v-if="mode == 'login'">
+                <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="mode == 'login'">
+                    <span v-if="status == 'loading'">Connexion en cours ...</span>
                     <span>Se connecter</span>
                 </button>
-                <button class="button" :class="{'button--disabled' : !validatedFields}" v-else>
-                    <span>Créer mon compte</span>
+                <button @click="createAccount()" class="button" :class="{'button--disabled' : !validatedFields}" v-else>
+                    <span v-if="status == 'loading'">Création en cours ...</span>
+                    <span v-else>Créer mon compte</span>
                 </button>
                 </div>
             </div>
@@ -33,32 +41,35 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     name: "FormConnect",
     data: function () {
     return {
       mode: 'login',
       email: '',
-      userName: '',
+      profileName: '',
       password: '',
     }
     },
     computed: {
         validatedFields: function () {
-        if (this.mode == 'create') {
-            if (this.email != "" && this.userName != "" && this.password != "") {
-            return true;
+            if (this.mode == 'create') {
+                if (this.email != "" && this.profileName != "" && this.password != "") {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-            return false;
+                if (this.email !== "" && this.password !== "") {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        } else {
-            if (this.email != "" && this.password != "") {
-            return true;
-            } else {
-            return false;
-            }
-        }
         },
+        ...mapState(['status'])
     },
     methods: {
         switchToCreateAccount: function () {
@@ -66,6 +77,30 @@ export default {
         },
         switchToLogin: function () {
         this.mode = 'login';
+        },
+        login : function (validatedFields){
+            const self = this;
+            this.$store.dispatch('login', {
+                email: this.email,
+                password: this.password
+            }).then(function (response) {
+                self.$router.push('/Profil');
+                console.log(response)
+            }, function (error) {
+                console.log(error)
+            })
+        },
+        createAccount : function () {
+            const self = this;
+            this.$store.dispatch('createAccount', {
+                email: this.email,
+                profileName: this.profileName,
+                password: this.password
+            }).then(function () {
+                self.login()
+            }, function (error) {
+                console.log(error)
+            })
         }
     }
 }
@@ -139,12 +174,12 @@ hr{
 
 .button{
     margin: 20px auto 40px;
-    width: 150px;
+    width: 250px;
     background-color: #7096AA;
     color: #FFFFFF;
     border: none;
-    border-radius: 20px;
-    padding: 20px
+    border-radius: 8px;
+    padding: 15px
 }
 
 </style>

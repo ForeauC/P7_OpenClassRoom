@@ -13,6 +13,17 @@
 </template>
 
 <script>
+export default {
+    name: 'ProfilUser',
+    mounted: function () {
+        if(this.$store.state.user.userId == -1){
+            this.$router.push('/');
+            return;
+        }
+        this.$store.dispatch('getUserInfos');
+    }
+}
+
 
 </script>
 

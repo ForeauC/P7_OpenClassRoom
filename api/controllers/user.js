@@ -50,6 +50,12 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+exports.getUserInfos = (req, res, next ) => {
+    User.findOne({ _id: req.params.id }) // La méthode findOne() dans notre modèle sauce pour trouver la sauce unique ayant le même _id que le paramètre de la requête
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(404).json({ error }));
+};
+
 exports.modifyImgProfil = (req, res, next) => {
     const imgProfil = req.file ? // Dans cette version modifiée de la fonction, on crée un objet sauceObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance sauce à partir de sauceObject , puis on effectue la modification.
     {

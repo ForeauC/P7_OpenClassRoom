@@ -2,12 +2,14 @@
     <nav class="nav__container">
       <img class="nav__logo" src="./assets/icon-left-font-monochrome-white.svg" alt="logo Groupomania">
       <div class="nav__menu">
-      <router-link to="/">
+      <router-link to="/"> 
+      </router-link> 
+      <router-link to="/Home">
         <svg class="nav__menu_icons" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
         width="35" height="35"
         viewBox="0 0 172 172"
         style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M86,10.75l-75.25,53.75v96.75h53.75v-43c0,-11.87875 9.62125,-21.5 21.5,-21.5c11.87875,0 21.5,9.62125 21.5,21.5v43h53.75v-96.75z"></path></g></g></svg>
-      </router-link> 
+      </router-link>
       <router-link to="/newPublication">
         <svg class="nav__menu-icons" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
         width="35" height="35"
@@ -23,15 +25,7 @@
         </g>
         </svg>
       </router-link>
-      <router-link to="/Connect">
-        <svg class="nav__menu-icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35px" height="35px" viewBox="0 0 70 70" version="1.1">
-        <g id="surface1">
-        <path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:#ffffff;stroke-opacity:1;stroke-miterlimit:4;" d="M 19.791518 10.120536 L 7.75 10.120536 " transform="matrix(2.916667,0,0,2.916667,5.833333,5.833333)"/>
-        <path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:#ffffff;stroke-opacity:1;stroke-miterlimit:4;" d="M 16.863839 7.204911 L 19.792857 10.120536 L 16.863839 13.036161 " transform="matrix(2.916667,0,0,2.916667,5.833333,5.833333)"/>
-        <path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:#ffffff;stroke-opacity:1;stroke-miterlimit:4;" d="M 0.259225 5.629911 C 0.588689 2.05 1.929314 0.749554 7.258332 0.749554 C 14.359225 0.749554 14.359225 3.059821 14.359225 10 C 14.359225 16.940179 14.359225 19.250446 7.258332 19.250446 C 1.929314 19.250446 0.588689 17.95 0.259225 14.370089 " transform="matrix(-2.916667,0,0,2.916667,48.470917,5.833333)"/>
-        </g>
-        </svg>
-      </router-link>
+      
       </div>
     </nav>
     <router-view/>
