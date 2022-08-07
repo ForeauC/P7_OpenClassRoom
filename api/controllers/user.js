@@ -51,7 +51,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.getUserInfos = (req, res, next ) => {
-    User.findOne({ _id: req.params.id }) // La méthode findOne() dans notre modèle sauce pour trouver la sauce unique ayant le même _id que le paramètre de la requête
+    User.findOne({ _id: req.params.id }) // La méthode findOne() dans notre modèle  pour trouver le user unique ayant le même _id que le paramètre de la requête
     .then(user => res.status(200).json(user))
     .catch(error => res.status(404).json({ error }));
 };

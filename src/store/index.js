@@ -6,14 +6,29 @@ const instance = axios.create({
     baseURL: 'http://localhost:3000/api/'
   });
 
+let user = localStorage.getItem('user');
+    if (!user) {
+    user = {
+        userId: -1,
+        token: '',
+        }; 
+    } else {
+        try {
+        user = JSON.parse(user);
+        instance.defaults.headers.common['Authorization'] = user.token;
+        } catch (ex) {
+        user = {
+            userId: -1,
+            token: '',
+        };
+        }
+    }
+
 export default createStore({
   state: {
     status : '',
-    user : {
-        userId: -1,
-        token: ''
-    },
-    userInfos :{
+    user : user,
+    userInfos : {
         profilName :'',
         email : '',
         profilImageUrl : '',
@@ -25,6 +40,8 @@ export default createStore({
     },
     logUser: function (state, user) {
         instance.defaults.headers.common['Authorization'] = user.token;
+        instance.defaults.params = user.userId;
+        localStorage.setItem('user', JSON.stringify(user))
         state.user = user;
     },
     userInfos : function (state, userInfos) {
@@ -61,15 +78,12 @@ export default createStore({
             });
         })
     },
-    getUserInfos : ({commit}, user) => {
-        instance.post('/auth/infos', user.userId)
+    getUserInfos: ({commit}) => {
+        instance.get('/auth//id')
             .then(function(response) {
-                commit('userInfos', response.data)
-                resolve(response)
+            commit('userInfos' , response.data)
             })
-            .catch(function (error) {
-                commit('setStatus', 'error_create')
-                reject(error);
+            .catch(function(){
             });
     }
   },

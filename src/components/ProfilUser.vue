@@ -1,27 +1,29 @@
 <template>
     <div class="card">
-        <p class="card__userName">@Riri14</p>
+        <p class="card__userName"></p>
         <div class="card__profilPicture">
             <img class="card__picture" src="" alt="">
         </div>
-        <p class="card__editPicture">Modifier votre photo profil</p>
+        <p  class="card__editPicture">Modifier votre photo profil</p>
         <div class="card__infoUser">
-            <p class="card__info">Email :</p>
+            <p class="card__info">Email : </p>
             <p class="card__info">Date d'incription :</p>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-    name: 'ProfilUser',
-    mounted: function () {
-        if(this.$store.state.user.userId == -1){
-            this.$router.push('/');
-            return;
-        }
-        this.$store.dispatch('getUserInfos');
+  name: 'Profile',
+  mounted: function () {
+    console.log(this.$store.state.user);
+    if (this.$store.state.user.userId == -1) {
+      this.$router.push('/');
+      return ;
     }
+    this.$store.dispatch('getUserInfos');
+  },
 }
 
 
