@@ -85,7 +85,6 @@ export default {
                 password: this.password
             }).then(function (response) {
                 self.$router.push('/Profil');
-                console.log('profil', response)
             }, function (error) {
                 console.log(error)
             })

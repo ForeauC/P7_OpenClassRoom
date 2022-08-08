@@ -9,6 +9,11 @@
             <p class="card__info">Email : </p>
             <p class="card__info">Date d'incription :</p>
         </div>
+        <div class="form-row">
+        <button @click="logout()" class="button">
+            Déconnexion
+        </button>
+        </div>
     </div>
 </template>
 
@@ -24,6 +29,12 @@ export default {
     }
     this.$store.dispatch('getUserInfos');
   },
+  methods: {
+    logout: function () {
+      this.$store.commit('logout');
+      this.$router.push('/');
+    }
+  }
 }
 
 
