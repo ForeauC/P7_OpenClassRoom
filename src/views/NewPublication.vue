@@ -1,17 +1,16 @@
 <template>
-  <div class="AddPublication">
-    <AddPublication/>
-  </div>
+    <div class="NewPublication">
+        <AddPublication />
+    </div>
 </template>
 
 <script>
 import AddPublication from '@/components/AddPublication.vue'
 
-
 export default {
-  name: 'NewPublicatio,',
-  components: {
-    AddPublication
-  }
+    name: 'NewPublication',
+    components: {
+        AddPublication
+    }
 }
 </script>
