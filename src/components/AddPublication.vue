@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <p class="card__userName">@Riri14</p>
+        <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input v-on:change="imagesUrl" class="card__button-picture" type="file" ref="file" />
         </div>
@@ -29,9 +29,11 @@ export default {
             this.$router.push('/')
             return
         }
+        this.$store.dispatch('getUserInfos')
     },
     computed: {
         ...mapState({
+            user: 'userInfos',
             publication: 'publication'
         })
     },
