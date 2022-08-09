@@ -1,15 +1,14 @@
 <template>
     <div class="card">
-        <p class="card__userName">{{ user.profileName }}</p>
+        <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__profilPicture">
             <img class="card__picture" src="" alt="" />
         </div>
         <p class="card__editPicture">Modifier votre photo profil</p>
         <div class="card__infoUser">
             <p class="card__info">Email : {{ user.email }}</p>
-            <p class="card__info">Date d'incription :</p>
         </div>
-        <div class="form-row">
+        <div class="card__button">
             <button @click="logout()" class="button">Déconnexion</button>
         </div>
     </div>
@@ -72,12 +71,23 @@ export default {
     cursor: pointer;
 }
 
-.card__infoUser {
-    padding-top: 20px;
-}
-
 .card__info {
     text-align: center;
     font-size: 20px;
+}
+
+.card__button {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.button {
+    width: 250px;
+    background-color: #7096aa;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
 }
 </style>

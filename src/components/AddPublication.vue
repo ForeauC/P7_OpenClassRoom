@@ -2,7 +2,7 @@
     <div class="card">
         <p class="card__userName">@Riri14</p>
         <div class="card__button">
-            <input v-bind="imagesUrl" class="card__button-picture" type="file" ref="file" />
+            <input v-on:change="imagesUrl" class="card__button-picture" type="file" ref="file" />
         </div>
         <p class="card__caption">Ajouter une légende :</p>
         <div class="card__input-container">
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'Publication',
     data: function () {
@@ -24,19 +25,26 @@ export default {
         }
     },
     mounted: function () {
-        console.log(this.$store.state.user)
         if (this.$store.state.user.userId == -1) {
             this.$router.push('/')
             return
         }
+    },
+    computed: {
+        ...mapState({
+            publication: 'publication'
+        })
     },
     methods: {
         addPublication: function () {
             const self = this
             this.$store
                 .dispatch('postPublication', {
+                    userId: this.$store.state.publication.userId,
                     description: this.description,
-                    imagesUrl: this.imagesUrl
+                    imagesUrl: this.imagesUrl,
+                    likes: 0,
+                    userLiked: []
                 })
                 .then(
                     function (response) {

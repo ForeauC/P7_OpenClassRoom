@@ -36,7 +36,9 @@ export default createStore({
         publication: {
             userId: '',
             description: '',
-            imagesUrl: ''
+            imagesUrl: '',
+            likes: 0,
+            userLiked: []
         }
     },
     mutations: {
@@ -59,6 +61,7 @@ export default createStore({
             localStorage.removeItem('user')
         },
         publication: function (state, publication) {
+            state.publication.userId = state.user.userId
             state.publication = publication
         }
     },
@@ -95,7 +98,6 @@ export default createStore({
             })
         },
         getUserInfos: ({ commit, state }) => {
-            console.log(user.userId)
             instance
                 .get(`/auth/${state.user.userId}`)
                 .then(function (response) {
@@ -106,7 +108,11 @@ export default createStore({
         postPublication: ({ commit, state }) => {
             return new Promise((resolve, reject) => {
                 instance
-                    .post(`/publication/${state.user.userId}`)
+                    .post(`/publication/${state.user.userId}`, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                     .then(function (response) {
                         commit('publication', response.data)
                         resolve(response)
