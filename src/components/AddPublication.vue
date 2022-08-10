@@ -2,7 +2,13 @@
     <div class="card">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
-            <input v-on:change="imagesUrl" class="card__button-picture" type="file" ref="file" />
+            <input
+                @:change="fileUpload()"
+                class="card__button-picture"
+                id="file"
+                type="file"
+                ref="file"
+            />
         </div>
         <p class="card__caption">Ajouter une légende :</p>
         <div class="card__input-container">
@@ -38,6 +44,10 @@ export default {
         })
     },
     methods: {
+        fileUpload: function (event) {
+            this.imagesUrl = event.target.files
+            console.log(this.imagesUrl)
+        },
         addPublication: function () {
             const self = this
             this.$store

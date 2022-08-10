@@ -105,10 +105,16 @@ export default createStore({
                 })
                 .catch(function () {})
         },
-        postPublication: ({ commit }) => {
+        postPublication: ({ commit }, state) => {
+            let formdData = new FormData()
+            formdData.append('publication', state.publication)
             return new Promise((resolve, reject) => {
                 instance
-                    .post('/publication')
+                    .post('/publication', formdData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                     .then(function (response) {
                         commit('publication', response.data)
                         resolve(response)
