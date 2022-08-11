@@ -35,7 +35,6 @@ export default createStore({
         },
         publication: {
             userId: '',
-            profileName: '',
             description: '',
             imagesUrl: '',
             likes: 0,
@@ -64,7 +63,6 @@ export default createStore({
         publication: function (state, playload) {
             state.publication = playload
             state.publication.userId = state.user.userId
-            state.publication.profileName = state.userInfos.profileName
         }
     },
     actions: {

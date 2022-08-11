@@ -53,7 +53,6 @@ export default {
                 .dispatch('postPublication', {
                     publication: {
                         userId: this.$store.state.user.userId,
-                        profileName: this.$store.state.userInfos.profileName,
                         description: this.description,
                         imagesUrl: this.imagesUrl,
                         likes: 0,
