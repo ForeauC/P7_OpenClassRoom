@@ -60,9 +60,9 @@ export default createStore({
             }
             localStorage.removeItem('user')
         },
-        publication: function (state, publication) {
+        publication: function (state, playload) {
+            state.publication = playload
             state.publication.userId = state.user.userId
-            state.publication = publication
         }
     },
     actions: {
@@ -105,9 +105,10 @@ export default createStore({
                 })
                 .catch(function () {})
         },
-        postPublication: ({ commit }, state) => {
+        postPublication: ({ commit }, playload) => {
             let formdData = new FormData()
-            formdData.append('publication', state.publication)
+            formdData.append('publication', JSON.stringify(playload.publication))
+            formdData.append('image', playload.image)
             return new Promise((resolve, reject) => {
                 instance
                     .post('/publication', formdData, {

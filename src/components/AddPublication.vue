@@ -1,13 +1,13 @@
 <template>
-    <div class="card">
+    <form class="card" @submit.prevent="addPublication">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input
-                @:change="fileUpload()"
                 class="card__button-picture"
                 id="file"
                 type="file"
                 ref="file"
+                @input="fileUpload"
             />
         </div>
         <p class="card__caption">Ajouter une légende :</p>
@@ -15,9 +15,9 @@
             <textarea v-model="description" class="card__input" type="description"></textarea>
         </div>
         <div class="card__button">
-            <button @click="addPublication()" class="card__button-submit button">Publier</button>
+            <button type="submit" class="card__button-submit button">Publier</button>
         </div>
-    </div>
+    </form>
 </template>
 
 <script>
@@ -44,19 +44,21 @@ export default {
         })
     },
     methods: {
-        fileUpload: function (event) {
-            this.imagesUrl = event.target.files
-            console.log(this.imagesUrl)
+        fileUpload(e) {
+            this.imagesUrl = e.target.files
         },
-        addPublication: function () {
+        addPublication() {
             const self = this
             this.$store
                 .dispatch('postPublication', {
-                    userId: this.$store.state.publication.userId,
-                    description: this.description,
-                    imagesUrl: this.imagesUrl,
-                    likes: 0,
-                    userLiked: []
+                    publication: {
+                        userId: this.$store.state.user.userId,
+                        description: this.description,
+                        imagesUrl: this.imagesUrl,
+                        likes: 0,
+                        userLiked: []
+                    },
+                    image: this.imagesUrl[0]
                 })
                 .then(
                     function (response) {
