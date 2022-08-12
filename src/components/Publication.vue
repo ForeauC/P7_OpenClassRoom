@@ -76,7 +76,7 @@
                 </svg>
             </div>
         </div>
-        <p class="card__titlePublication">Jolie coucher de soleil</p>
+        <p class="card__titlePublication">Coucher de soleil</p>
         <div class="card__imgPublication">
             <img src="../assets/sun.jpg" alt="" />
         </div>
@@ -88,7 +88,30 @@
     </div>
 </template>
 
-<script></script>
+<script>
+import { mapState } from 'vuex'
+export default {
+    name: 'AllPublication',
+    data: function () {
+        return {
+            posts: []
+        }
+    },
+    mounted: function () {
+        if (this.$store.state.user.userId == -1) {
+            this.$router.push('/')
+            return
+        }
+        this.$store.dispatch('getPublications')
+    },
+    computed: {
+        ...mapState({
+            user: 'userInfos',
+            publication: 'publication'
+        })
+    }
+}
+</script>
 
 <style scoped>
 .card {

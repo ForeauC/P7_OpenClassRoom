@@ -124,6 +124,18 @@ export default createStore({
                         reject(error)
                     })
             })
+        },
+        getPublications: ({ commit, state }) => {
+            Promise.all([instance.get(`/auth/${state.user.userId}`), instance.get(`/publication`)])
+                .then((response) => {
+                    console.log(response)
+                    commit('userInfos', response.data)
+                    commit('publication', response.data)
+                    return response
+                })
+                .catch((error) => {
+                    return error
+                })
         }
     }
 })
