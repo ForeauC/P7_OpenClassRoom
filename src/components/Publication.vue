@@ -1,11 +1,13 @@
 <template>
-    <div class="card">
+    <div class="card" v-for="publi in publication" :key="publi._id">
         <div class="card__profil">
             <div class="card__profil-picture">
                 <img src="../assets/ape1.png" alt="" />
             </div>
             <div class="card__profil-info">
-                <p class="card__profil-userName">@tata</p>
+                <p class="card__profil-userName" v-if="publi.userId == user._id">
+                    {{ user.profileName }}
+                </p>
             </div>
             <div class="card__profil-icone">
                 <svg
@@ -76,13 +78,13 @@
                 </svg>
             </div>
         </div>
-        <p class="card__titlePublication">Coucher de soleil</p>
+        <p class="card__titlePublication">{{ publi.description }}</p>
         <div class="card__imgPublication">
-            <img src="../assets/sun.jpg" alt="" />
+            <img :src="publi.imagesUrl" alt="" />
         </div>
         <hr />
         <div class="card__Like">
-            <p class="card__Like-counter">10</p>
+            <p class="card__Like-counter">{{ publi.likes }}</p>
             <img src="../assets/like.png" alt="" />
         </div>
     </div>
@@ -92,17 +94,12 @@
 import { mapState } from 'vuex'
 export default {
     name: 'AllPublication',
-    data: function () {
-        return {
-            posts: []
-        }
-    },
-    mounted: function () {
+    mounted: async function () {
         if (this.$store.state.user.userId == -1) {
             this.$router.push('/')
             return
         }
-        this.$store.dispatch('getPublications')
+        await this.$store.dispatch('getPublications')
     },
     computed: {
         ...mapState({

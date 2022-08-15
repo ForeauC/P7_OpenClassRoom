@@ -126,16 +126,47 @@ export default createStore({
             })
         },
         getPublications: ({ commit, state }) => {
-            Promise.all([instance.get(`/auth/${state.user.userId}`), instance.get(`/publication`)])
+            const publication = instance.get(`/publication`).then(function (response) {
+                /* commit('publication', response.data) */
+                return publication.data
+            })
+
+            let publicationCompletes = []
+
+            for (publi of publication) {
+                instance.get(`/auth/${state.user.userId}`).then((userInfos) => {
+                    publicationCompletes.push({
+                        _id: publication._id,
+                        userId: publication.userId,
+                        description: publication.description,
+                        imagesUrl: publication.imagesUrl,
+                        likes: publication.likes,
+                        userLiked: publication.userLiked,
+                        profileName: userInfos.profileName,
+                        profilImageUrl: userInfos.profilImageUrl
+                    })
+                    console.log(publicationCompletes)
+                    commit('publicationCompletes', publicationCompletes)
+                    return publicationCompletes
+                })
+            }
+        }
+
+        /*         getPublications: ({ commit, state }) => {
+            const allPromise = Promise.all([
+                instance.get(`/auth/${state.user.userId}`),
+                instance.get(`/publication`)
+            ])
                 .then((response) => {
-                    console.log(response)
-                    commit('userInfos', response.data)
-                    commit('publication', response.data)
+                    console.log('res', response)
+                    commit('userInfos', response[0].data)
+                    commit('publication', response[1].data)
                     return response
                 })
                 .catch((error) => {
                     return error
                 })
-        }
+            return allPromise
+        } */
     }
 })
