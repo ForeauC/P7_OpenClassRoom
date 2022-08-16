@@ -52,6 +52,8 @@ export default {
             this.$store
                 .dispatch('postPublication', {
                     publication: {
+                        profileName: this.$store.state.userInfos.profileName,
+                        profilImageUrl: this.$store.state.userInfos.profilImageUrl,
                         userId: this.$store.state.user.userId,
                         description: this.description,
                         imagesUrl: this.imagesUrl,

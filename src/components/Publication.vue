@@ -5,9 +5,7 @@
                 <img src="../assets/ape1.png" alt="" />
             </div>
             <div class="card__profil-info">
-                <p class="card__profil-userName" v-if="publi.userId == user._id">
-                    {{ user.profileName }}
-                </p>
+                <p class="card__profil-userName">{{ publi.profileName }}</p>
             </div>
             <div class="card__profil-icone">
                 <svg

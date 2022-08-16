@@ -35,6 +35,8 @@ export default createStore({
         },
         publication: {
             userId: '',
+            profileName: '',
+            profilImageUrl: '',
             description: '',
             imagesUrl: '',
             likes: 0,
@@ -125,31 +127,13 @@ export default createStore({
                     })
             })
         },
-        getPublications: ({ commit, state }) => {
-            const publication = instance.get(`/publication`).then(function (response) {
-                /* commit('publication', response.data) */
-                return publication.data
-            })
-
-            let publicationCompletes = []
-
-            for (publi of publication) {
-                instance.get(`/auth/${state.user.userId}`).then((userInfos) => {
-                    publicationCompletes.push({
-                        _id: publication._id,
-                        userId: publication.userId,
-                        description: publication.description,
-                        imagesUrl: publication.imagesUrl,
-                        likes: publication.likes,
-                        userLiked: publication.userLiked,
-                        profileName: userInfos.profileName,
-                        profilImageUrl: userInfos.profilImageUrl
-                    })
-                    console.log(publicationCompletes)
-                    commit('publicationCompletes', publicationCompletes)
-                    return publicationCompletes
+        getPublications: ({ commit }) => {
+            instance
+                .get(`/publication`)
+                .then(function (response) {
+                    commit('publication', response.data)
                 })
-            }
+                .catch(function () {})
         }
 
         /*         getPublications: ({ commit, state }) => {
