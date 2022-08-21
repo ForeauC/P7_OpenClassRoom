@@ -1,14 +1,16 @@
 <template>
-    <div class="card" v-for="publi in publication" :key="publi._id">
+    <div class="card" v-for="publi in publication" :key="publi._id" @click.prevent="deleteButton">
         <div class="card__profil">
             <div class="card__profil-picture">
                 <img src="../assets/ape1.png" alt="" />
             </div>
             <div class="card__profil-info">
-                <p class="card__profil-userName">{{ publi.profileName }}</p>
+                <p class="card__profil-userName">@{{ publi.profileName }}</p>
             </div>
             <div class="card__profil-icone">
                 <svg
+                    v-if="$store.state.user.userId === publi.userId"
+                    type="click"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -42,6 +44,7 @@
                     </g>
                 </svg>
                 <svg
+                    v-if="$store.state.user.userId === publi.userId"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -78,7 +81,7 @@
         </div>
         <p class="card__titlePublication">{{ publi.description }}</p>
         <div class="card__imgPublication">
-            <img :src="publi.imagesUrl" alt="" />
+            <img :src="publi.imageUrl" />
         </div>
         <hr />
         <div class="card__Like">
@@ -104,6 +107,11 @@ export default {
             user: 'userInfos',
             publication: 'publication'
         })
+    },
+    methods: {
+        deleteButton() {
+            this.$store.dispatch('deletePublication')
+        }
     }
 }
 </script>

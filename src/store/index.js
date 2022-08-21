@@ -38,7 +38,7 @@ export default createStore({
             profileName: '',
             profilImageUrl: '',
             description: '',
-            imagesUrl: '',
+            imageUrl: '',
             likes: 0,
             userLiked: []
         }
@@ -131,26 +131,17 @@ export default createStore({
             instance
                 .get(`/publication`)
                 .then(function (response) {
+                    commit('publication', response.data.reverse())
+                })
+                .catch(function () {})
+        },
+        deletePublication: ({ commit, state }) => {
+            instance
+                .delete(`/publication/${state.publication._id}`)
+                .then(function (response) {
                     commit('publication', response.data)
                 })
                 .catch(function () {})
         }
-
-        /*         getPublications: ({ commit, state }) => {
-            const allPromise = Promise.all([
-                instance.get(`/auth/${state.user.userId}`),
-                instance.get(`/publication`)
-            ])
-                .then((response) => {
-                    console.log('res', response)
-                    commit('userInfos', response[0].data)
-                    commit('publication', response[1].data)
-                    return response
-                })
-                .catch((error) => {
-                    return error
-                })
-            return allPromise
-        } */
     }
 })

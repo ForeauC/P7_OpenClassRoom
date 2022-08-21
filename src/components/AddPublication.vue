@@ -56,7 +56,7 @@ export default {
                         profilImageUrl: this.$store.state.userInfos.profilImageUrl,
                         userId: this.$store.state.user.userId,
                         description: this.description,
-                        imagesUrl: this.imagesUrl,
+                        imageUrl: this.imageUrl,
                         likes: 0,
                         userLiked: []
                     },
