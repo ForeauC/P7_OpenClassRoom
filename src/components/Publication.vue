@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-for="publi in publication" :key="publi._id" @click.prevent="deleteButton">
+    <div class="card" id="publication" v-for="publi in publication" :key="publi._id">
         <div class="card__profil">
             <div class="card__profil-picture">
                 <img src="../assets/ape1.png" alt="" />
@@ -10,7 +10,6 @@
             <div class="card__profil-icone">
                 <svg
                     v-if="$store.state.user.userId === publi.userId"
-                    type="click"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -45,6 +44,7 @@
                 </svg>
                 <svg
                     v-if="$store.state.user.userId === publi.userId"
+                    @click.prevent="deleteButton(publi._id)"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -104,13 +104,22 @@ export default {
     },
     computed: {
         ...mapState({
-            user: 'userInfos',
             publication: 'publication'
         })
     },
     methods: {
-        deleteButton() {
-            this.$store.dispatch('deletePublication')
+        deleteButton(id) {
+            fetch(`http://localhost:3000/api/publication/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.$store.state.user.token
+                }
+            }).then(() => {
+                alert('supprimé !')
+                document.location.reload()
+            })
         }
     }
 }
