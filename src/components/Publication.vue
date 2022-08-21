@@ -86,7 +86,9 @@
         <hr />
         <div class="card__Like">
             <p class="card__Like-counter">{{ publi.likes }}</p>
-            <img src="../assets/like.png" alt="" />
+            <button class="card__Like-button" @submit.prevent="likeButton(publi._id)">
+                <img src="../assets/like.png" />
+            </button>
         </div>
     </div>
 </template>
@@ -118,6 +120,19 @@ export default {
                 }
             }).then(() => {
                 alert('supprimé !')
+                document.location.reload()
+            })
+        },
+        likeButton(id) {
+            fetch(`http://localhost:3000/api/publication/${id}/like`, {
+                method: 'post',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.$store.state.user.token
+                }
+            }).then((res) => {
+                console.log(res)
                 document.location.reload()
             })
         }
@@ -218,5 +233,11 @@ hr {
 .card__Like img {
     width: 30px;
     height: 30px;
+}
+
+.card__Like-button {
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 </style>

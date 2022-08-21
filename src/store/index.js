@@ -134,14 +134,6 @@ export default createStore({
                     commit('publication', response.data.reverse())
                 })
                 .catch(function () {})
-        },
-        deletePublication: ({ commit, state }) => {
-            instance
-                .delete(`/publication/${state.publication._id}`)
-                .then(function (response) {
-                    commit('publication', response.data)
-                })
-                .catch(function () {})
         }
     }
 })
