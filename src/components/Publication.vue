@@ -86,7 +86,7 @@
         <hr />
         <div class="card__Like">
             <p class="card__Like-counter">{{ publi.likes }}</p>
-            <button class="card__Like-button" @submit.prevent="likeButton(publi._id)">
+            <button class="card__Like-button" @click="likeButton(publi._id)">
                 <img src="../assets/like.png" />
             </button>
         </div>
@@ -130,7 +130,8 @@ export default {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + this.$store.state.user.token
-                }
+                },
+                body: JSON.stringify({ likes: 1, userId: this.$store.state.user.userId })
             }).then((res) => {
                 console.log(res)
                 document.location.reload()

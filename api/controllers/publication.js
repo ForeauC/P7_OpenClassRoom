@@ -1,7 +1,6 @@
 const Publication = require('../models/publication')
 const fs = require('fs') // modules nodeJS permet de créer et gérer des fichiers
 const { runInNewContext } = require('vm')
-const publication = require('../models/publication')
 
 exports.createPublication = (req, res, next) => {
     const publicationObject = JSON.parse(req.body.publication) // Pour ajouter un fichier à la requête, le front-end doit envoyer les données de la requête sous la forme form-data, et non sous forme de JSON. Le corps de la requête contient une chaîne sauce , qui est simplement un objet Sauce converti en chaîne. Nous devons donc l'analyser à l'aide de JSON.parse() pour obtenir un objet utilisable.
@@ -20,8 +19,7 @@ exports.createPublication = (req, res, next) => {
 }
 
 exports.getAllPublication = (req, res, next) => {
-    publication
-        .find()
+    Publication.find()
         .then((publications) => {
             return res.status(200).json(publications)
         })
@@ -60,20 +58,38 @@ exports.deletePublication = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }))
 }
 
-exports.getLikes = (req, res, next) => {
+exports.likes = (req, res, next) => {
     Publication.findOne({ _id: req.params.id })
         .then((publication) => {
+            console.log('trouvé')
             //like pour la premier fois
-            if (!publication.usersLiked.includes(req.body.userId) && req.body.like === 1) {
+            console.log(req.body.likes)
+            if (!publication.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
+                console.log('premier like')
                 // fonction inverse "!" si l'userId à déja like false sinon true , utilisation de la méthode includes qui permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon
                 publication.likes += 1
                 publication.usersLiked.push(req.body.userId)
+                console.log('publication modifiée', publication)
                 // annuler un like
             } else if (publication.usersLiked.includes(req.body.userId) && req.body.like === 0) {
+                console.log('déjà liké')
                 publication.likes -= 1
                 let userKey = publication.usersLiked.indexOf(req.body.userId) // la méthode indexOf() permet d'obtnir l'index de l'élément sur lequel nous sommes actuellement
                 publication.usersLiked.splice(userKey, 1) // La méthode spilce() change le contenu d'un tableau en supprimant ou en ajoutant des éléments. Ici, nous supprimons le premier élément qui commence par "userKey"
             }
+            console.log('hallo')
+            console.log(publication.usersLiked)
+            // on update la publi
+            Publication.updateOne(
+                { _id: req.params.id },
+                {
+                    likes: publication.likes,
+                    usersLiked: publication.usersLiked
+                }
+            )
+                // La méthode updateOne() permet de mettre à jour un un document MongoDB qui satifait les conditions ( filter, update, option)
+                .then(() => res.status(200).json({ message: 'Like updated successfully!' }))
+                .catch((error) => res.status(400).json({ error: error }))
         })
         .catch((error) => res.status(500).json({ error: error }))
 }
