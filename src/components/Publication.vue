@@ -10,7 +10,7 @@
             <div class="card__profil-icone">
                 <svg
                     v-if="$store.state.user.userId === publi.userId"
-                    @click.prevent="modifyButton()"
+                    @click.prevent="modifyButton(publi._id)"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -138,7 +138,8 @@ export default {
                 document.location.reload()
             })
         },
-        modifyButton() {
+        modifyButton(id) {
+            this.$emit('modify-publi-id', id)
             this.$router.push('ModifyPublication')
         }
     }

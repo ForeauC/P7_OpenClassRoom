@@ -1,5 +1,5 @@
 <template>
-    <form class="card" @submit.prevent="modifyPost(publication._id)">
+    <form class="card" @submit.prevent="modifyPost(this.publicationId)">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input
@@ -17,15 +17,19 @@
         <div class="card__button">
             <button type="submit" class="card__button-submit button">Publier</button>
         </div>
+        <AddPublication @modify-publi-id="setPublicationId" />
     </form>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import AddPublication from './AddPublication.vue'
 export default {
     name: 'ModifyPubli',
+    components: { AddPublication },
     data: function () {
         return {
+            publicationId: '',
             description: '',
             imagesUrl: ''
         }
@@ -46,28 +50,27 @@ export default {
     methods: {
         fileUpload(e) {
             this.imagesUrl = e.target.files
-        }
-    },
-    modifyPost(_id) {
-        const self = this
-        if (
-            this.description != this.$store.state.publication.description ||
-            this.imagesUrl != this.$store.state.publication.imagesUrl
-        ) {
-            this.$store
-                .dispatch('modifyPublication', {
-                    description: this.description,
-                    image: this.imagesUrl[0]
-                })
-                .then(
-                    function (response) {
-                        console.log(response)
-                        self.$router.push('/Home')
-                    },
-                    function (error) {
-                        console.log(error)
-                    }
-                )
+        },
+        setPublicationId() {
+            this.publicationId = playload.id
+        },
+        modifyPost(id) {
+            const self = this
+            let formdData = new FormData()
+            formdData.append('publication', JSON.stringify(this.description))
+            formdData.append('image', this.imagesUrl)
+
+            fetch(`http://localhost:3000/api/publication/${id}/`, {
+                method: 'put',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + this.$store.state.user.token
+                },
+                body: JSON.stringify({ formdData })
+            }).then((res) => {
+                console.log(res)
+            })
         }
     }
 }
