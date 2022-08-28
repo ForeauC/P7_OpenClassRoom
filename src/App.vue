@@ -119,7 +119,7 @@
 }
 
 .nav__logo {
-    width: 300px;
+    max-width: 300px;
     height: auto;
     padding-left: 40px;
 }
@@ -130,5 +130,32 @@
 
 .nav__menu-icons {
     padding-left: 80px;
+}
+
+@media screen and (max-width: 800px) {
+    .nav__container {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0 20px 0;
+    }
+    .nav__logo {
+        margin: 0 auto;
+        padding: 0;
+    }
+    .nav__menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        padding: 10px 0 10px 0;
+        margin-top: 10px;
+        background-color: #7096aa;
+    }
+    @media screen and (max-width: 400px) {
+        .nav__logo {
+            width: 200px;
+        }
+    }
 }
 </style>

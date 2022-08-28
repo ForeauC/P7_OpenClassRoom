@@ -1,5 +1,5 @@
 <template>
-    <form class="card" @submit.prevent="addPublication">
+    <form class="card" @submit.prevent="modifyPost(publication._id)">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input
@@ -23,7 +23,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-    name: 'Publication',
+    name: 'ModifyPubli',
     data: function () {
         return {
             description: '',
@@ -46,20 +46,17 @@ export default {
     methods: {
         fileUpload(e) {
             this.imagesUrl = e.target.files
-        },
-        addPublication() {
-            const self = this
+        }
+    },
+    modifyPost(_id) {
+        const self = this
+        if (
+            this.description != this.$store.state.publication.description ||
+            this.imagesUrl != this.$store.state.publication.imagesUrl
+        ) {
             this.$store
-                .dispatch('postPublication', {
-                    publication: {
-                        profileName: this.$store.state.userInfos.profileName,
-                        profilImageUrl: this.$store.state.userInfos.profilImageUrl,
-                        userId: this.$store.state.user.userId,
-                        description: this.description,
-                        imageUrl: this.imageUrl,
-                        likes: 0,
-                        userLiked: []
-                    },
+                .dispatch('modifyPublication', {
+                    description: this.description,
                     image: this.imagesUrl[0]
                 })
                 .then(
@@ -125,7 +122,7 @@ export default {
 }
 
 .card__input {
-    max-width: 500px;
+    width: 500px;
     height: 200px;
     border: 1px solid #7096aa;
     border-radius: 20px;

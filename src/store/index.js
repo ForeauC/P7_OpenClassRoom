@@ -134,6 +134,26 @@ export default createStore({
                     commit('publication', response.data.reverse())
                 })
                 .catch(function () {})
+        },
+        modifyPublication: ({ commit }, playload) => {
+            let formdData = new FormData()
+            formdData.append('publication', JSON.stringify(playload.publication))
+            formdData.append('image', playload.image)
+            return new Promise((resolve, reject) => {
+                instance
+                    .PUT(`/publication/${state.publication._id}`, formdData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(function (response) {
+                        commit('publication', response.data)
+                        resolve(response)
+                    })
+                    .catch(function (error) {
+                        reject(error)
+                    })
+            })
         }
     }
 })

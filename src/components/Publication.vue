@@ -10,6 +10,7 @@
             <div class="card__profil-icone">
                 <svg
                     v-if="$store.state.user.userId === publi.userId"
+                    @click.prevent="modifyButton()"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -136,6 +137,9 @@ export default {
                 console.log(res)
                 document.location.reload()
             })
+        },
+        modifyButton() {
+            this.$router.push('ModifyPublication')
         }
     }
 }
@@ -143,7 +147,7 @@ export default {
 
 <style scoped>
 .card {
-    width: 520px;
+    max-width: 520px;
     height: 600px;
     background-color: #ffffff;
     margin: 20px auto;
@@ -240,5 +244,42 @@ hr {
     border: none;
     background: none;
     cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+    .card {
+        height: 500px;
+    }
+    .card__profil-picture img {
+        width: 60px;
+        height: 60px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .card {
+        height: 420px;
+    }
+    .card__profil-picture {
+        padding-top: 10px;
+    }
+    .card__profil-userName {
+        margin: 20px 0 20px 0;
+        font-size: 25px;
+    }
+    .card__profil-icone svg {
+        width: 20px;
+        height: 20px;
+    }
+    .card__titlePublication {
+        padding-bottom: 10px;
+        font-size: 15px;
+    }
+    .card__Like p {
+        font-size: 12px;
+    }
+    .card__Like img {
+        width: 20px;
+        height: 20px;
+    }
 }
 </style>

@@ -220,4 +220,16 @@ hr {
     border-radius: 8px;
     padding: 15px;
 }
+
+@media screen and (max-width: 800px) {
+    .connect__container {
+        text-align: center;
+    }
+    .h1_container {
+        display: none;
+    }
+    .card__container {
+        width: 100%;
+    }
+}
 </style>
