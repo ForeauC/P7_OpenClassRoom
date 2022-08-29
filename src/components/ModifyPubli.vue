@@ -1,5 +1,5 @@
 <template>
-    <form class="card" @submit.prevent="modifyPost(this.publicationId)">
+    <form class="card" @submit.prevent="modifyPost()">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input
@@ -17,19 +17,15 @@
         <div class="card__button">
             <button type="submit" class="card__button-submit button">Publier</button>
         </div>
-        <AddPublication @modify-publi-id="setPublicationId" />
     </form>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import AddPublication from './AddPublication.vue'
 export default {
     name: 'ModifyPubli',
-    components: { AddPublication },
     data: function () {
         return {
-            publicationId: '',
             description: '',
             imagesUrl: ''
         }
@@ -51,17 +47,16 @@ export default {
         fileUpload(e) {
             this.imagesUrl = e.target.files
         },
-        setPublicationId() {
-            this.publicationId = playload.id
-        },
-        modifyPost(id) {
+        modifyPost() {
             const self = this
+            const id = this.$store.state.EditingPublication
+            console.log(id)
             let formdData = new FormData()
             formdData.append('publication', JSON.stringify(this.description))
             formdData.append('image', this.imagesUrl)
 
             fetch(`http://localhost:3000/api/publication/${id}/`, {
-                method: 'put',
+                method: 'PUT',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',

@@ -139,7 +139,7 @@ export default {
             })
         },
         modifyButton(id) {
-            this.$emit('modify-publi-id', id)
+            this.$store.commit('EditingPublication', id)
             this.$router.push('ModifyPublication')
         }
     }

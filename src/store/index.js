@@ -41,6 +41,9 @@ export default createStore({
             imageUrl: '',
             likes: 0,
             userLiked: []
+        },
+        EditingPublication: {
+            _id: ''
         }
     },
     mutations: {
@@ -65,6 +68,9 @@ export default createStore({
         publication: function (state, playload) {
             state.publication = playload
             state.publication.userId = state.user.userId
+        },
+        EditingPublication: function (state, EditingPublication) {
+            state.EditingPublication = EditingPublication
         }
     },
     actions: {
