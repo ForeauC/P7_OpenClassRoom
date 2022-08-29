@@ -139,7 +139,7 @@ export default {
             })
         },
         modifyButton(id) {
-            this.$store.commit('EditingPublication', id)
+            this.$store.commit('editingPublication', id)
             this.$router.push('ModifyPublication')
         }
     }

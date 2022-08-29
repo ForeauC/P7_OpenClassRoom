@@ -1,5 +1,5 @@
 <template>
-    <form class="card" @submit.prevent="modifyPost()">
+    <form class="card" @submit.prevent="modifyPublication()">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__button">
             <input
@@ -47,25 +47,25 @@ export default {
         fileUpload(e) {
             this.imagesUrl = e.target.files
         },
-        modifyPost() {
+        modifyPublication() {
             const self = this
-            const id = this.$store.state.EditingPublication
-            console.log(id)
-            let formdData = new FormData()
-            formdData.append('publication', JSON.stringify(this.description))
-            formdData.append('image', this.imagesUrl)
+            this.$store
+                .dispatch('modifyPost', {
+                    publication: {
+                        description: this.description
+                    },
+                    image: this.imagesUrl[0]
+                })
 
-            fetch(`http://localhost:3000/api/publication/${id}/`, {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + this.$store.state.user.token
-                },
-                body: JSON.stringify({ formdData })
-            }).then((res) => {
-                console.log(res)
-            })
+                .then(
+                    function (response) {
+                        console.log(response)
+                        self.$router.push('/Home')
+                    },
+                    function (error) {
+                        console.log(error)
+                    }
+                )
         }
     }
 }
@@ -76,8 +76,8 @@ export default {
     max-width: 700px;
     height: 550px;
     margin: 50px auto;
+    padding-bottom: 20px;
     background-color: #ffffff;
-    border-radius: 20px;
     box-shadow: 0px 1px 2px 0px #656565;
     color: #707070;
 }

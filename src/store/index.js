@@ -42,9 +42,7 @@ export default createStore({
             likes: 0,
             userLiked: []
         },
-        EditingPublication: {
-            _id: ''
-        }
+        editingPublication: ''
     },
     mutations: {
         setStatus: function (state, status) {
@@ -69,8 +67,8 @@ export default createStore({
             state.publication = playload
             state.publication.userId = state.user.userId
         },
-        EditingPublication: function (state, EditingPublication) {
-            state.EditingPublication = EditingPublication
+        editingPublication: function (state, editingPublication) {
+            state.editingPublication = editingPublication
         }
     },
     actions: {
@@ -140,6 +138,27 @@ export default createStore({
                     commit('publication', response.data.reverse())
                 })
                 .catch(function () {})
+        },
+        modifyPost: ({ commit, state }, playload) => {
+            let formdData = new FormData()
+            formdData.append('publication', JSON.stringify(playload.publication))
+            formdData.append('image', playload.image)
+            console.log(state.editingPublication)
+            return new Promise((resolve, reject) => {
+                instance
+                    .put(`/publication/${state.editingPublication}`, formdData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(function (response) {
+                        commit('publication', response.data)
+                        resolve(response)
+                    })
+                    .catch(function (error) {
+                        reject(error)
+                    })
+            })
         }
     }
 })
