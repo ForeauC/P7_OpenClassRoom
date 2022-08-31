@@ -10,7 +10,7 @@
             <div class="card__profil-icone">
                 <svg
                     v-if="$store.state.user.userId === publi.userId"
-                    @click.prevent="modifyButton(publi._id)"
+                    @click.prevent="modifyButton(publi._id, publi.description)"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
                     y="0px"
@@ -138,8 +138,8 @@ export default {
                 document.location.reload()
             })
         },
-        modifyButton(id) {
-            this.$store.commit('editingPublication', id)
+        modifyButton(id, publi) {
+            this.$store.commit('editingPublication', { _id: id, description: publi })
             this.$router.push('ModifyPublication')
         }
     }

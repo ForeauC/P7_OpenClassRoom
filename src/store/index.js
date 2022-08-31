@@ -42,7 +42,10 @@ export default createStore({
             likes: 0,
             userLiked: []
         },
-        editingPublication: ''
+        editingPublication: {
+            _id: '',
+            description: ''
+        }
     },
     mutations: {
         setStatus: function (state, status) {
@@ -143,10 +146,10 @@ export default createStore({
             let formdData = new FormData()
             formdData.append('publication', JSON.stringify(playload.publication))
             formdData.append('image', playload.image)
-            console.log(state.editingPublication)
+            console.log(state.editingPublication._id)
             return new Promise((resolve, reject) => {
                 instance
-                    .put(`/publication/${state.editingPublication}`, formdData, {
+                    .put(`/publication/${state.editingPublication._id}`, formdData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }

@@ -36,6 +36,7 @@ export default {
             return
         }
         this.$store.dispatch('getUserInfos')
+        this.description = this.$store.state.editingPublication.description
     },
     computed: {
         ...mapState({

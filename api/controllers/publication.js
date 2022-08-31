@@ -32,7 +32,7 @@ exports.modifyPublication = (req, res, next) => {
               ...JSON.parse(req.body.publication), // JSON.parse() transforme un objet stringifié en Object JavaScript exploitable.
               imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
           }
-        : { ...req.body }
+        : { ...JSON.parse(req.body.publication) }
     Publication.updateOne({ _id: req.params.id }, { ...publicationObject, _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Publication modifié avec succés' }))
         .catch((error) => res.status(400).json({ error: error }))
