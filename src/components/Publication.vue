@@ -9,7 +9,10 @@
             </div>
             <div class="card__profil-icone">
                 <svg
-                    v-if="$store.state.user.userId === publi.userId"
+                    v-if="
+                        $store.state.user.userId === publi.userId ||
+                        $store.state.userInfos.moderateur === true
+                    "
                     @click.prevent="modifyButton(publi._id, publi.description)"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -44,7 +47,10 @@
                     </g>
                 </svg>
                 <svg
-                    v-if="$store.state.user.userId === publi.userId"
+                    v-if="
+                        $store.state.user.userId === publi.userId ||
+                        $store.state.userInfos.moderateur === true
+                    "
                     @click.prevent="deleteButton(publi._id)"
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -103,6 +109,7 @@ export default {
             this.$router.push('/')
             return
         }
+        this.$store.dispatch('getUserInfos')
         await this.$store.dispatch('getPublications')
     },
     computed: {

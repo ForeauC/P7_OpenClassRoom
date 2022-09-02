@@ -31,7 +31,8 @@ export default createStore({
         userInfos: {
             profileName: '',
             email: '',
-            profilImageUrl: ''
+            profilImageUrl: '',
+            moderateur: ''
         },
         publication: {
             userId: '',
