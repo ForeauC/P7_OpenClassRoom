@@ -16,7 +16,7 @@ exports.signup = (req, res, next) => {
                 email: req.body.email, // Adresse indiqué dans le corps de la requête
                 password: hash, // On enregistre le hash du mdp et non le mdp en blanc
                 profilImageUrl: '',
-                moderateur: req.body.moderateur
+                admin: req.body.moderateur
             })
             user.save() // Enregistrement dans la BDD
                 .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))

@@ -46,7 +46,7 @@ exports.deletePublication = (req, res, next) => {
                 res.status(404).json({ error: new Error('Erreur') })
             }
             User.findOne({ _id: req.params.id }).then((user) => {
-                if (user.moderateur !== true || publication.userId !== req.auth.userId) {
+                if (user.admin !== true || publication.userId !== req.auth.userId) {
                     res.status(400).json({ error: new Error('Requète non authorisé!') })
                 }
                 const filename = publication.imageUrl.split('/images/')[1] // Une fois trouvé, on extrait le nom du fichier à supprimer

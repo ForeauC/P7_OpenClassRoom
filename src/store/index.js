@@ -32,7 +32,7 @@ export default createStore({
             profileName: '',
             email: '',
             profilImageUrl: '',
-            moderateur: ''
+            admin: ''
         },
         publication: {
             userId: '',

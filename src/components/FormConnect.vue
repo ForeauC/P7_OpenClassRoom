@@ -25,6 +25,7 @@
                         placeholder="Adresse mail"
                     />
                 </div>
+                <span v-if="errors.email">{{ errors.email }}</span>
                 <div class="form-row" v-if="mode == 'create'">
                     <input
                         v-model="profileName"
@@ -33,6 +34,7 @@
                         placeholder="Nom de profil"
                     />
                 </div>
+                <span v-if="errors.email">{{ errors.profileName }}</span>
                 <div class="form-row">
                     <input
                         v-model="password"
@@ -41,6 +43,7 @@
                         placeholder="Mot de passe"
                     />
                 </div>
+                <span v-if="errors.email">{{ errors.password }}</span>
                 <div class="form-row" v-if="mode == 'login' && status == 'error_login'">
                     Adresse mail et/ou mot de passe invalide
                 </div>
@@ -82,7 +85,8 @@ export default {
             mode: 'login',
             email: '',
             profileName: '',
-            password: ''
+            password: '',
+            errors: {}
         }
     },
     computed: {
@@ -118,7 +122,7 @@ export default {
                     password: this.password
                 })
                 .then(
-                    function (response) {
+                    function () {
                         self.$router.push('/Profil')
                     },
                     function (error) {
@@ -142,6 +146,29 @@ export default {
                         console.log(error)
                     }
                 )
+        }
+    },
+    watch: {
+        email(newValue) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newValue)) {
+                this.errors['email'] = ''
+            } else {
+                this.errors['email'] = "L'adresse email n'a pas un bon format"
+            }
+        },
+        profileName(newValue) {
+            if (newValue.length < 3) {
+                this.errors['profileName'] = 'Nom de profil est trop court'
+            } else if (newValue.length > 50) {
+                this.errors['profileName'] = 'Nom de profil est trop long'
+            }
+        },
+        password(newValue) {
+            if (newValue.length < 3) {
+                this.errors['password'] = 'Password est trop court'
+            } else if (newValue.length > 50) {
+                this.errors['password'] = 'Password est trop long'
+            }
         }
     }
 }

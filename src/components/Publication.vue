@@ -11,7 +11,7 @@
                 <svg
                     v-if="
                         $store.state.user.userId === publi.userId ||
-                        $store.state.userInfos.moderateur === true
+                        $store.state.userInfos.admin === true
                     "
                     @click.prevent="modifyButton(publi._id, publi.description)"
                     xmlns="http://www.w3.org/2000/svg"
