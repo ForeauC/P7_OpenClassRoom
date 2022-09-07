@@ -34,7 +34,7 @@
                         placeholder="Nom de profil"
                     />
                 </div>
-                <span v-if="errors.email">{{ errors.profileName }}</span>
+                <span class="errors" v-if="errors.profileName">{{ errors.profileName }}</span>
                 <div class="form-row">
                     <input
                         v-model="password"
@@ -43,7 +43,7 @@
                         placeholder="Mot de passe"
                     />
                 </div>
-                <span v-if="errors.email">{{ errors.password }}</span>
+                <span v-if="errors.password">{{ errors.password }}</span>
                 <div class="form-row" v-if="mode == 'login' && status == 'error_login'">
                     Adresse mail et/ou mot de passe invalide
                 </div>
@@ -246,6 +246,10 @@ hr {
     border: none;
     border-radius: 8px;
     padding: 15px;
+}
+
+.errors {
+    padding-left: 20px;
 }
 
 @media screen and (max-width: 800px) {
