@@ -49,7 +49,7 @@
                 <svg
                     v-if="
                         $store.state.user.userId === publi.userId ||
-                        $store.state.userInfos.moderateur === true
+                        $store.state.userInfos.admin === true
                     "
                     @click.prevent="deleteButton(publi._id)"
                     xmlns="http://www.w3.org/2000/svg"

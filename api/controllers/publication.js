@@ -1,5 +1,4 @@
 const Publication = require('../models/publication')
-const User = require('../models/user')
 const fs = require('fs') // modules nodeJS permet de créer et gérer des fichiers
 const { runInNewContext } = require('vm')
 
@@ -45,17 +44,15 @@ exports.deletePublication = (req, res, next) => {
             if (!publication) {
                 res.status(404).json({ error: new Error('Erreur') })
             }
-            User.findOne({ _id: req.params.id }).then((user) => {
-                if (user.admin !== true || publication.userId !== req.auth.userId) {
-                    res.status(400).json({ error: new Error('Requète non authorisé!') })
-                }
-                const filename = publication.imageUrl.split('/images/')[1] // Une fois trouvé, on extrait le nom du fichier à supprimer
-                fs.unlink(`images/${filename}`, () => {
-                    // On le supprime avec fs.unlink
-                    Publication.deleteOne({ _id: req.params.id })
-                        .then(() => res.status(204).json({ message: 'Publication supprimé !' }))
-                        .catch((error) => res.status(400).json({ error }))
-                })
+            if (publication.userId !== req.auth.userId) {
+                res.status(400).json({ error: new Error('Requète non authorisé!') })
+            }
+            const filename = publication.imageUrl.split('/images/')[1] // Une fois trouvé, on extrait le nom du fichier à supprimer
+            fs.unlink(`images/${filename}`, () => {
+                // On le supprime avec fs.unlink
+                Publication.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(204).json({ message: 'Publication supprimé !' }))
+                    .catch((error) => res.status(400).json({ error }))
             })
         })
         .catch((error) => res.status(400).json({ error }))
