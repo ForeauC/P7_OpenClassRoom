@@ -113,7 +113,11 @@ export default createStore({
                 .then(function (response) {
                     commit('userInfos', response.data)
                 })
-                .catch(function () {})
+                .catch(function (error) {
+                    location.reload()
+                    localStorage.removeItem('user')
+                    this.$router.push('/')
+                })
         },
         postPublication: ({ commit }, playload) => {
             let formdData = new FormData()
@@ -132,6 +136,9 @@ export default createStore({
                     })
                     .catch(function (error) {
                         reject(error)
+                        location.reload()
+                        localStorage.removeItem('user')
+                        this.$router.push('/')
                     })
             })
         },
@@ -141,7 +148,11 @@ export default createStore({
                 .then(function (response) {
                     commit('publication', response.data.reverse())
                 })
-                .catch(function () {})
+                .catch(function () {
+                    location.reload()
+                    localStorage.removeItem('user')
+                    this.$router.push('/')
+                })
         },
         modifyPost: ({ commit, state }, playload) => {
             let formdData = new FormData()
@@ -161,6 +172,9 @@ export default createStore({
                     })
                     .catch(function (error) {
                         reject(error)
+                        location.reload()
+                        localStorage.removeItem('user')
+                        this.$router.push('/')
                     })
             })
         }

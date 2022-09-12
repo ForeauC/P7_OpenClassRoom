@@ -161,6 +161,8 @@ export default {
                 this.errors['profileName'] = 'Nom de profil est trop court'
             } else if (newValue.length > 50) {
                 this.errors['profileName'] = 'Nom de profil est trop long'
+            } else {
+                this.errors['profileName'] = ''
             }
         },
         password(newValue) {
@@ -168,6 +170,8 @@ export default {
                 this.errors['password'] = 'Password est trop court'
             } else if (newValue.length > 50) {
                 this.errors['password'] = 'Password est trop long'
+            } else {
+                this.errors['password'] = ''
             }
         }
     }

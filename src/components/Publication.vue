@@ -126,10 +126,16 @@ export default {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + this.$store.state.user.token
                 }
-            }).then(() => {
-                alert('supprimé !')
-                document.location.reload()
             })
+                .then(() => {
+                    alert('supprimé !')
+                    document.location.reload()
+                })
+                .catch(() => {
+                    location.reload()
+                    this.store.$localStorage.removeItem('user')
+                    this.$router.push('/')
+                })
         },
         likeButton(id) {
             fetch(`http://localhost:3000/api/publication/${id}/like`, {
@@ -140,10 +146,16 @@ export default {
                     Authorization: 'Bearer ' + this.$store.state.user.token
                 },
                 body: JSON.stringify({ likes: 1, userId: this.$store.state.user.userId })
-            }).then((res) => {
-                console.log(res)
-                document.location.reload()
             })
+                .then((res) => {
+                    console.log(res)
+                    document.location.reload()
+                })
+                .catch(() => {
+                    location.reload()
+                    this.store.$localStorage.removeItem('user')
+                    this.$router.push('/')
+                })
         },
         modifyButton(id, publi) {
             this.$store.commit('editingPublication', { _id: id, description: publi })
