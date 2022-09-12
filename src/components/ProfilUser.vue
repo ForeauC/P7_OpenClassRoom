@@ -2,9 +2,12 @@
     <div class="card">
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__profilPicture">
-            <img class="card__picture" src="" alt="" />
+            <img class="card__picture" :src="user.profilImageUrl" alt="" />
         </div>
-        <p class="card__editPicture">Modifier votre photo profil</p>
+        <form class="card__editPicture" @submit.prevent="modifyImgProfil()">
+            <input class="card__editpicture" id="file" type="file" ref="file" @input="fileUpload" />
+            <button type="submit" class="card__button-submit">Publier</button>
+        </form>
         <div class="card__infoUser">
             <p class="card__info">Email : {{ user.email }}</p>
         </div>
@@ -18,6 +21,11 @@
 import { mapState } from 'vuex'
 export default {
     name: 'Profile',
+    data: function () {
+        return {
+            profilImageUrl: ''
+        }
+    },
     mounted: function () {
         if (this.$store.state.user.userId == -1) {
             this.$router.push('/')
@@ -31,6 +39,25 @@ export default {
         })
     },
     methods: {
+        fileUpload(e) {
+            this.profilImageUrl = e.target.files
+        },
+        modifyImgProfil() {
+            const self = this
+            this.$store
+                .dispatch('modifyImageProfil', {
+                    image: this.profilImageUrl[0]
+                })
+
+                .then(
+                    function (response) {
+                        location.reload()
+                    },
+                    function (error) {
+                        console.log(error)
+                    }
+                )
+        },
         logout: function () {
             this.$store.commit('logout')
             this.$router.push('/')
@@ -65,9 +92,11 @@ export default {
     border-radius: 50%;
 }
 
-.card__editPicture {
-    text-align: center;
-    cursor: pointer;
+.card__profilPicture img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .card__info {

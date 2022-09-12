@@ -60,6 +60,9 @@ export default createStore({
         userInfos: function (state, userInfos) {
             state.userInfos = userInfos
         },
+        editProfilImageUrl: function (state, editingPublication) {
+            state.editingPublication = editingPublication
+        },
         logout: function (state) {
             state.user = {
                 userId: -1,
@@ -118,6 +121,23 @@ export default createStore({
                     localStorage.removeItem('user')
                     this.$router.push('/')
                 })
+        },
+        modifyImageProfil: ({ commit, state }, editProfilImageUrl) => {
+            let formdData = new FormData()
+            formdData.append('image', editProfilImageUrl.image)
+            return new Promise((resolve, reject) => {
+                instance
+                    .put(`/auth/${state.user.userId}`, formdData, {
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    })
+                    .then(function (response) {
+                        commit('image', response.data)
+                        resolve(response)
+                    })
+                    .catch(function (error) {
+                        reject(error)
+                    })
+            })
         },
         postPublication: ({ commit }, playload) => {
             let formdData = new FormData()

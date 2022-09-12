@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+const fs = require('fs') // modules nodeJS permet de créer et gérer des fichiers
 const ncrypt = require('ncrypt-js')
 const secretKey = 'test'
 
@@ -61,10 +62,9 @@ exports.getUserInfos = (req, res, next) => {
         .catch((error) => res.status(404).json({ error }))
 }
 
-exports.modifyImgProfil = (req, res, next) => {
-    const imgProfil = req.file // Dans cette version modifiée de la fonction, on crée un objet sauceObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance sauce à partir de sauceObject , puis on effectue la modification.
+exports.addImgProfil = (req, res, next) => {
+    const imgProfil = req.file // Dans cette version modifiée de la fonction, on crée un objet qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance sauce à partir de sauceObject , puis on effectue la modification.
         ? {
-              ...JSON.parse(req.body.user), // JSON.parse() transforme un objet stringifié en Object JavaScript exploitable.
               profilImageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
           }
         : { ...req.body }
