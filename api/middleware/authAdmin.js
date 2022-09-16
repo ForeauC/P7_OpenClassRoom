@@ -14,10 +14,16 @@ module.exports = (req, res, next) => {
                 if (!user) {
                     return res.status(404).json({ error: 'Utilsateur non trouvé' })
                 }
-                if ((req.body.userId && req.body.userId !== userId) || user.admin !== true) {
+                if (req.body.userId && req.body.userId !== userId) {
+                    console.log('User pas auth')
                     // S'il y a un userId dans le corps de la requête et que celui-ci est différent du userId.
                     throw 'User ID non valable !' // Renvoie une erreur
+                }
+                if (user.admin !== true) {
+                    console.log('User pas admin')
+                    throw 'User pas admin !' // Renvoie une erreur
                 } else {
+                    console.log('tout bon')
                     next()
                 }
             })

@@ -54,7 +54,7 @@
                     <button
                         @click="login()"
                         class="button"
-                        :class="{ 'button--disabled': !validatedFields }"
+                        :disabled="validatedFields"
                         v-if="mode == 'login'"
                     >
                         <span v-if="status == 'loading'">Connexion en cours ...</span>
@@ -63,7 +63,7 @@
                     <button
                         @click="createAccount()"
                         class="button"
-                        :class="{ 'button--disabled': !validatedFields }"
+                        :disabled="validatedFields"
                         v-else
                     >
                         <span v-if="status == 'loading'">Création en cours ...</span>
@@ -92,13 +92,17 @@ export default {
     computed: {
         validatedFields: function () {
             if (this.mode == 'create') {
-                if (this.email != '' && this.profileName != '' && this.password != '') {
+                if (
+                    (this.email === '' || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test) &&
+                    this.profileName === '' &&
+                    this.password === ''
+                ) {
                     return true
                 } else {
                     return false
                 }
             } else {
-                if (this.email !== '' && this.password !== '') {
+                if (this.email === '' && this.password === '') {
                     return true
                 } else {
                     return false

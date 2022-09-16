@@ -2,7 +2,7 @@
     <div class="card" id="publication" v-for="publi in publication" :key="publi._id">
         <div class="card__profil">
             <div class="card__profil-picture">
-                <img src="../assets/ape1.png" alt="" />
+                <img :src="publi.profilImageUrl" alt="" />
             </div>
             <div class="card__profil-info">
                 <p class="card__profil-userName">@{{ publi.profileName }}</p>
@@ -133,7 +133,7 @@ export default {
                 })
                 .catch(() => {
                     location.reload()
-                    this.store.$localStorage.removeItem('user')
+                    localStorage.removeItem('user')
                     this.$router.push('/')
                 })
         },
@@ -231,6 +231,7 @@ export default {
 .card__imgPublication img {
     width: 90%;
     height: 100%;
+    object-fit: cover;
     border-radius: 20px;
 }
 

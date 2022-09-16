@@ -1,4 +1,12 @@
-# front
+# Project Groupomania
+
+## Project description
+```
+Project of an enterprise social network.
+The front end is in vue 3 (vuex / router) and back end in node js with a local database mongoo db (mongo db compass)
+```
+
+# front (vue 3)
 
 ## Project setup
 ```
@@ -10,10 +18,19 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+# back (node js)
+
+## install node js (in case it is not)
 ```
-npm run build
+npm install -g npm
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## install nodemon 
+```
+npm install -g npm
+```
+
+## To start nodemon server
+```
+nodemon server
+```

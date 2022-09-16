@@ -12,7 +12,12 @@
         </div>
         <p class="card__caption">Ajouter une légende :</p>
         <div class="card__input-container">
-            <textarea v-model="description" class="card__input" type="description"></textarea>
+            <textarea
+                v-model="description"
+                class="card__input"
+                type="description"
+                maxlength="150"
+            ></textarea>
         </div>
         <div class="card__button">
             <button type="submit" class="card__button-submit button">Publier</button>
@@ -46,6 +51,7 @@ export default {
     methods: {
         fileUpload(e) {
             this.imagesUrl = e.target.files
+            console.log(this.imagesUrl)
         },
         addPublication() {
             const self = this
@@ -125,7 +131,8 @@ export default {
 }
 
 .card__input {
-    max-width: 500px;
+    width: 60vw;
+    max-width: 600px;
     height: 200px;
     border: 1px solid #7096aa;
     border-radius: 20px;
@@ -151,14 +158,6 @@ export default {
     }
     .card__button-submit {
         height: 40px;
-    }
-    .card__input {
-        width: 400px;
-    }
-}
-@media screen and (max-width: 470px) {
-    .card__input {
-        width: 250px;
     }
 }
 </style>

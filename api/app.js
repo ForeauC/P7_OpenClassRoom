@@ -9,7 +9,7 @@ const mongoSanitize = require('express-mongo-sanitize')
 const app = express() // Permet de créer une application express
 
 // Connexion à la base de données MongoDB
-mongoose.connect('mongodb://localhost:27017/test', {
+mongoose.connect('mongodb://localhost:27017/groupomania', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
