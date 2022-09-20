@@ -1,14 +1,10 @@
 <template>
     <div class="card">
+        <h1 class="card__title">Votre profil :</h1>
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__profilPicture">
-            <img class="card__picture" :src="user.profilImageUrl" alt="" />
+            <img class="card__picture" src="../assets/ape1.png" alt="" />
         </div>
-        <p class="card__editText">Choisir une photo de profil :</p>
-        <form class="card__editPicture" @submit.prevent="modifyImgProfil()">
-            <input class="card__editpicture" id="file" type="file" ref="file" @input="fileUpload" />
-            <button type="submit" class="card__button-submit">Valider</button>
-        </form>
         <div class="card__infoUser">
             <p class="card__info">Email : {{ user.email }}</p>
         </div>
@@ -22,11 +18,6 @@
 import { mapState } from 'vuex'
 export default {
     name: 'Profile',
-    data: function () {
-        return {
-            profilImageUrl: ''
-        }
-    },
     mounted: function () {
         if (this.$store.state.user.userId == -1) {
             this.$router.push('/')
@@ -40,25 +31,6 @@ export default {
         })
     },
     methods: {
-        fileUpload(e) {
-            this.profilImageUrl = e.target.files
-        },
-        modifyImgProfil() {
-            const self = this
-            this.$store
-                .dispatch('modifyImageProfil', {
-                    image: this.profilImageUrl[0]
-                })
-
-                .then(
-                    function (response) {
-                        location.reload()
-                    },
-                    function (error) {
-                        console.log(error)
-                    }
-                )
-        },
         logout: function () {
             this.$store.commit('logout')
             this.$router.push('/')
@@ -70,12 +42,18 @@ export default {
 <style scoped>
 .card {
     max-width: 700px;
-    height: 500px;
+    height: 450px;
     margin: 50px auto;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0px 1px 2px 0px #656565;
     color: #707070;
+}
+
+.card__title {
+    text-align: center;
+    padding-top: 30px;
+    margin: 0;
 }
 
 .card__userName {

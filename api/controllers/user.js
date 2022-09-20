@@ -16,7 +16,6 @@ exports.signup = (req, res, next) => {
                 profileName: req.body.profileName,
                 email: req.body.email, // Adresse indiqué dans le corps de la requête
                 password: hash, // On enregistre le hash du mdp et non le mdp en blanc
-                profilImageUrl: '',
                 admin: req.body.moderateur
             })
             user.save() // Enregistrement dans la BDD
@@ -60,15 +59,4 @@ exports.getUserInfos = (req, res, next) => {
     User.findOne({ _id: req.params.id }) // La méthode findOne() dans notre modèle  pour trouver le user unique ayant le même _id que le paramètre de la requête
         .then((user) => res.status(200).json(user))
         .catch((error) => res.status(404).json({ error }))
-}
-
-exports.addImgProfil = (req, res, next) => {
-    const imgProfil = req.file // Dans cette version modifiée de la fonction, on crée un objet qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance sauce à partir de sauceObject , puis on effectue la modification.
-        ? {
-              profilImageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-          }
-        : { ...req.body }
-    User.updateOne({ _id: req.params.id }, { ...imgProfil, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Image de profil rajouter' }))
-        .catch((error) => res.status(400).json({ error: error }))
 }

@@ -2,7 +2,7 @@
     <div class="card" id="publication" v-for="publi in publication" :key="publi._id">
         <div class="card__profil">
             <div class="card__profil-picture">
-                <img :src="publi.profilImageUrl" alt="" />
+                <img src="../assets/ape1.png" alt="" />
             </div>
             <div class="card__profil-info">
                 <p class="card__profil-userName">@{{ publi.profileName }}</p>
@@ -131,7 +131,7 @@ export default {
             })
                 .then(() => {
                     alert('supprimé !')
-                    document.location.reload()
+                    this.$store.dispatch('getPublications')
                 })
                 .catch(() => {
                     location.reload()
@@ -147,11 +147,11 @@ export default {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + this.$store.state.user.token
                 },
-                body: JSON.stringify({ likes, userId: this.$store.state.user.userId })
+                body: JSON.stringify({ userId: this.$store.state.user.userId })
             })
                 .then((res) => {
                     console.log(res)
-                    document.location.reload()
+                    this.$store.dispatch('getPublications')
                 })
                 .catch(() => {
                     location.reload()

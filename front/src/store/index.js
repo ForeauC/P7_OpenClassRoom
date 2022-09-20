@@ -31,13 +31,11 @@ export default createStore({
         userInfos: {
             profileName: '',
             email: '',
-            profilImageUrl: '',
             admin: ''
         },
         publication: {
             userId: '',
             profileName: '',
-            profilImageUrl: '',
             description: '',
             imageUrl: '',
             likes: 0,

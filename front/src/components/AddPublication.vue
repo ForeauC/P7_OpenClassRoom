@@ -20,7 +20,9 @@
             ></textarea>
         </div>
         <div class="card__button">
-            <button type="submit" class="card__button-submit button">Publier</button>
+            <button type="submit" class="card__button-submit button" :disabled="validatedPubli">
+                Publier
+            </button>
         </div>
     </form>
 </template>
@@ -32,7 +34,7 @@ export default {
     data: function () {
         return {
             description: '',
-            imagesUrl: ''
+            imageUrl: ''
         }
     },
     mounted: function () {
@@ -46,7 +48,14 @@ export default {
         ...mapState({
             user: 'userInfos',
             publication: 'publication'
-        })
+        }),
+        validatedPubli: function () {
+            if (this.description === '' && this.imageUrl === '') {
+                return true
+            } else {
+                return false
+            }
+        }
     },
     methods: {
         fileUpload(e) {
@@ -59,7 +68,6 @@ export default {
                 .dispatch('postPublication', {
                     publication: {
                         profileName: this.$store.state.userInfos.profileName,
-                        profilImageUrl: this.$store.state.userInfos.profilImageUrl,
                         userId: this.$store.state.user.userId,
                         description: this.description,
                         imageUrl: this.imageUrl,

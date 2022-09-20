@@ -28,7 +28,7 @@ exports.getAllPublication = (req, res, next) => {
 }
 
 exports.modifyPublication = (req, res, next) => {
-    const publicationObject = req.file // Dans cette version modifiée de la fonction, on crée un objet publicationObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance sauce à partir de sauceObject , puis on effectue la modification.
+    const publicationObject = req.file // Dans cette version modifiée de la fonction, on crée un objet publicationObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance publication à partir de publicationeObject , puis on effectue la modification.
         ? {
               ...JSON.parse(req.body.publication), // JSON.parse() transforme un objet stringifié en Object JavaScript exploitable.
               imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -86,14 +86,14 @@ exports.likes = (req, res, next) => {
             console.log('trouvé')
             //like pour la premier fois
             console.log(req.body.likes)
-            if (!publication.usersLiked.includes(req.body.userId) && req.body.likes === 1) {
+            if (!publication.usersLiked.includes(req.body.userId)) {
                 console.log('premier like')
                 // fonction inverse "!" si l'userId à déja like false sinon true , utilisation de la méthode includes qui permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon
                 publication.likes += 1
                 publication.usersLiked.push(req.body.userId)
                 console.log('publication modifiée', publication)
                 // annuler un like
-            } else if (publication.usersLiked.includes(req.body.userId) && req.body.like === 0) {
+            } else if (publication.usersLiked.includes(req.body.userId)) {
                 console.log('déjà liké')
                 publication.likes -= 1
                 let userKey = publication.usersLiked.indexOf(req.body.userId) // la méthode indexOf() permet d'obtnir l'index de l'élément sur lequel nous sommes actuellement
