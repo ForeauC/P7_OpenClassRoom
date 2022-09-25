@@ -111,6 +111,12 @@
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
 .nav__container {
     display: flex;
     justify-content: space-between;

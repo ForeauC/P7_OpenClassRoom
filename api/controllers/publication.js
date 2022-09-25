@@ -1,22 +1,26 @@
 const Publication = require('../models/publication')
 const User = require('../models/user')
 const fs = require('fs') // modules nodeJS permet de créer et gérer des fichiers
-const { runInNewContext } = require('vm')
 
 exports.createPublication = (req, res, next) => {
-    const publicationObject = JSON.parse(req.body.publication) // Pour ajouter un fichier à la requête, le front-end doit envoyer les données de la requête sous la forme form-data, et non sous forme de JSON. Le corps de la requête contient une chaîne sauce , qui est simplement un objet Sauce converti en chaîne. Nous devons donc l'analyser à l'aide de JSON.parse() pour obtenir un objet utilisable.
-    delete publicationObject._id // On supprime le champ _id qui est généré automatiquement par la BDD (car ce ne sera pas le bon id)
-    const publication = new Publication({
-        // Création d'une instance
-        ...publicationObject, // L'operateur spread "...", permet de copier les éléments du body
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` // Nous devons également résoudre l'URL complète de notre image, car req.file.filename ne contient que le segment filename . Nous utilisons req.protocol pour obtenir le premier segment (dans notre cas 'http' ). Nous ajoutons '://' , puis utilisons req.get('host') pour résoudre l'hôte du serveur (ici, 'localhost:3000' ). Nous ajoutons finalement '/images/' et le nom de fichier pour compléter notre URL.
-    })
-    publication
-        .save() // Enregistre les infos dans la BDD
-        .then(() => res.status(201).json({ message: 'Publication bien enregistrée' }))
-        .catch((error) => {
-            res.status(400).json({ error: error })
+    if (req.body.publication === null && req.file === undefined) {
+        return res.status(400).json({ error: new Error('Publication non valide') })
+    } else {
+        const publicationObject = JSON.parse(req.body.publication) // Pour ajouter un fichier à la requête, le front-end doit envoyer les données de la requête sous la forme form-data, et non sous forme de JSON. Le corps de la requête contient une chaîne , qui est simplement un objet converti en chaîne. Nous devons donc l'analyser à l'aide de JSON.parse() pour obtenir un objet utilisable.
+        delete publicationObject._id // On supprime le champ _id qui est généré automatiquement par la BDD (car ce ne sera pas le bon id)
+        const publication = new Publication({
+            // Création d'une instance
+            ...publicationObject, // L'operateur spread "...", permet de copier les éléments du body
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` // Nous devons également résoudre l'URL complète de notre image, car req.file.filename ne contient que le segment filename . Nous utilisons req.protocol pour obtenir le premier segment (dans notre cas 'http' ). Nous ajoutons '://' , puis utilisons req.get('host') pour résoudre l'hôte du serveur (ici, 'localhost:3000' ). Nous ajoutons finalement '/images/' et le nom de fichier pour compléter notre URL.
         })
+
+        publication
+            .save() // Enregistre les infos dans la BDD
+            .then(() => res.status(201).json({ message: 'Publication bien enregistrée' }))
+            .catch((error) => {
+                res.status(400).json({ error: error })
+            })
+    }
 }
 
 exports.getAllPublication = (req, res, next) => {
@@ -83,24 +87,17 @@ exports.deletePublication = (req, res, next) => {
 exports.likes = (req, res, next) => {
     Publication.findOne({ _id: req.params.id })
         .then((publication) => {
-            console.log('trouvé')
             //like pour la premier fois
-            console.log(req.body.likes)
             if (!publication.usersLiked.includes(req.body.userId)) {
-                console.log('premier like')
                 // fonction inverse "!" si l'userId à déja like false sinon true , utilisation de la méthode includes qui permet de déterminer si un tableau contient une valeur et renvoie true si c'est le cas, false sinon
                 publication.likes += 1
                 publication.usersLiked.push(req.body.userId)
-                console.log('publication modifiée', publication)
                 // annuler un like
             } else if (publication.usersLiked.includes(req.body.userId)) {
-                console.log('déjà liké')
                 publication.likes -= 1
                 let userKey = publication.usersLiked.indexOf(req.body.userId) // la méthode indexOf() permet d'obtnir l'index de l'élément sur lequel nous sommes actuellement
                 publication.usersLiked.splice(userKey, 1) // La méthode spilce() change le contenu d'un tableau en supprimant ou en ajoutant des éléments. Ici, nous supprimons le premier élément qui commence par "userKey"
             }
-            console.log('hallo')
-            console.log(publication.usersLiked)
             // on update la publi
             Publication.updateOne(
                 { _id: req.params.id },

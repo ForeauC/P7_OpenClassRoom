@@ -150,7 +150,6 @@ export default {
                 body: JSON.stringify({ userId: this.$store.state.user.userId })
             })
                 .then((res) => {
-                    console.log(res)
                     this.$store.dispatch('getPublications')
                 })
                 .catch(() => {
@@ -188,8 +187,8 @@ export default {
 }
 
 .card__profil-picture img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 

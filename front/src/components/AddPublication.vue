@@ -60,7 +60,6 @@ export default {
     methods: {
         fileUpload(e) {
             this.imagesUrl = e.target.files
-            console.log(this.imagesUrl)
         },
         addPublication() {
             const self = this
@@ -78,7 +77,6 @@ export default {
                 })
                 .then(
                     function (response) {
-                        console.log(response)
                         self.$router.push('/Home')
                     },
                     function (error) {

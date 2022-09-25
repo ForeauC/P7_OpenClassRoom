@@ -93,7 +93,7 @@ export default {
         validatedFields: function () {
             if (this.mode == 'create') {
                 if (
-                    (this.email === '' || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test) &&
+                    (this.email === '' || /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test()) &&
                     this.profileName === '' &&
                     this.password === ''
                 ) {

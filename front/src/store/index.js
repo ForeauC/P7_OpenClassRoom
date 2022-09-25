@@ -176,7 +176,6 @@ export default createStore({
             let formdData = new FormData()
             formdData.append('publication', JSON.stringify(playload.publication))
             formdData.append('image', playload.image)
-            console.log(state.editingPublication._id)
             return new Promise((resolve, reject) => {
                 instance
                     .put(`/publication/${state.editingPublication._id}`, formdData, {

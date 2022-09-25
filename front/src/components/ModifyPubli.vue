@@ -60,7 +60,6 @@ export default {
 
                 .then(
                     function (response) {
-                        console.log(response)
                         self.$router.push('/Home')
                     },
                     function (error) {
