@@ -32,15 +32,44 @@ exports.getAllPublication = (req, res, next) => {
 }
 
 exports.modifyPublication = (req, res, next) => {
-    const publicationObject = req.file // Dans cette version modifiée de la fonction, on crée un objet publicationObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance publication à partir de publicationeObject , puis on effectue la modification.
-        ? {
-              ...JSON.parse(req.body.publication), // JSON.parse() transforme un objet stringifié en Object JavaScript exploitable.
-              imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-          }
-        : { ...JSON.parse(req.body.publication) }
-    Publication.updateOne({ _id: req.params.id }, { ...publicationObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Publication modifié avec succés' }))
-        .catch((error) => res.status(400).json({ error: error }))
+    Publication.findOne({ _id: req.params.id }) // On trouve l'objet dans la BDD
+        .then((publication) => {
+            if (!publication) {
+                return res.status(404).json({ error: new Error('Erreur') })
+            }
+
+            User.findOne({ _id: req.auth.userId })
+                .then((user) => {
+                    if (!user) {
+                        return res.status(404).json({ error: 'Utilsateur non trouvé' })
+                    }
+
+                    // Si l'user est le propriétaire de la publication ou s'il est admin, on supprime la publication
+                    if (publication.userId === req.auth.userId || user.admin === true) {
+                        // On modifie la publication ...
+                        const publicationObject = req.file // Dans cette version modifiée de la fonction, on crée un objet publicationObject qui regarde si req.file existe ou non. S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. On crée ensuite une instance publication à partir de publicationeObject , puis on effectue la modification.
+                            ? {
+                                  ...JSON.parse(req.body.publication), // JSON.parse() transforme un objet stringifié en Object JavaScript exploitable.
+                                  imageUrl: `${req.protocol}://${req.get('host')}/images/${
+                                      req.file.filename
+                                  }`
+                              }
+                            : { ...JSON.parse(req.body.publication) }
+                        Publication.updateOne(
+                            { _id: req.params.id },
+                            { ...publicationObject, _id: req.params.id }
+                        )
+                            .then(() =>
+                                res.status(200).json({ message: 'Publication modifié avec succés' })
+                            )
+                            .catch((error) => res.status(400).json({ error: error }))
+                    } else {
+                        return res.status(403).send('unauthorized request')
+                    }
+                })
+                .catch((error) => console.log('raté'))
+        })
+        .catch((error) => res.status(404).json({ error }))
 }
 
 exports.deletePublication = (req, res, next) => {
