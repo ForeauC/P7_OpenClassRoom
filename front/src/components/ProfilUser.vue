@@ -3,7 +3,7 @@
         <h1 class="card__title">Votre profil :</h1>
         <p class="card__userName">@{{ user.profileName }}</p>
         <div class="card__profilPicture">
-            <img class="card__picture" src="../assets/ape1.png" alt="" />
+            <img class="card__picture" src="../assets/profil.png" alt="" />
         </div>
         <div class="card__infoUser">
             <p class="card__info">Email : {{ user.email }}</p>

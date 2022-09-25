@@ -47,13 +47,12 @@ exports.deletePublication = (req, res, next) => {
     Publication.findOne({ _id: req.params.id }) // On trouve l'objet dans la BDD
         .then((publication) => {
             if (!publication) {
-                return res.status(404).json({ error: new Error('Erreur') })
+                return res.status(404).json({ error: new Error('Erreur de publication') })
             }
 
             User.findOne({ _id: req.auth.userId })
                 .then((user) => {
                     if (!user) {
-                        console.log("L'utilisateur n'existe pas")
                         return res.status(404).json({ error: 'Utilsateur non trouvé' })
                     }
 
@@ -76,10 +75,10 @@ exports.deletePublication = (req, res, next) => {
                             })
                             .catch((error) => res.status(404).json({ error }))
                     } else {
-                        return res.status(403).send('unauthorized request')
+                        return res.status(403).send('Non authorisé')
                     }
                 })
-                .catch((error) => console.log('raté'))
+                .catch((error) => console.log('Erreur'))
         })
         .catch((error) => res.status(404).json({ error }))
 }
@@ -107,7 +106,7 @@ exports.likes = (req, res, next) => {
                 }
             )
                 // La méthode updateOne() permet de mettre à jour un un document MongoDB qui satifait les conditions ( filter, update, option)
-                .then(() => res.status(200).json({ message: 'Like updated successfully!' }))
+                .then(() => res.status(200).json({ message: 'Like bien ajouté' }))
                 .catch((error) => res.status(400).json({ error: error }))
         })
         .catch((error) => res.status(500).json({ error: error }))

@@ -1,42 +1,28 @@
-# Project Groupomania
+# Groupomania
 
-## Project description
+Bienvenue sur Groupomania Social Network
 
-```
-Project of an enterprise social network.
-The front end is in vue 3 (vuex / router) and back end in node js with a local database mongoo db (mongo db compass)
-```
+## Description
 
-# front (vue 3)
+Pour utiliser correctement l'api , veuillez clonez ce repository
+Stack utilisé : Node js et un serveur express pour l'API' / Vue js 3 pour le Front End
 
-## Project setup
+# GROUPOMANIA - front (vue 3)
 
-```
-npm install
-```
+## Installation
 
-### Compiles and hot-reloads for development
+Depuis le dossier front : lancer le terminal et lancer le projet, taper la commande suivante `npm install`
 
-```
-npm run serve
-```
+## Acceder au serveur (http://localhost:8080/)
 
-# back (node js)
+Depuis le dossier front : lancer le terminal et accéder au server, taper la commande suivante `npm run serve`
 
-## install node js (in case it is not)
+# GOUPOMANIA - api (node js)
 
-```
-npm install -g npm
-```
+## Installer Node
 
-## install nodemon
+Depuis le dossier api, installer node (si besoin), taper la commande suivante `npm install -g npm`
 
-```
-npm install -g nodemon
-```
+## Lancer l'api
 
-## To start nodemon server
-
-```
-nodemon server
-```
+Dans le dossier api, lancer le terminal et démarrer l'api, tapper la commande suivante `npm start`

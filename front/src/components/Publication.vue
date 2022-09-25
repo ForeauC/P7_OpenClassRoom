@@ -2,7 +2,7 @@
     <div class="card" id="publication" v-for="publi in publication" :key="publi._id">
         <div class="card__profil">
             <div class="card__profil-picture">
-                <img src="../assets/ape1.png" alt="" />
+                <img src="../assets/profil.png" alt="" />
             </div>
             <div class="card__profil-info">
                 <p class="card__profil-userName">@{{ publi.profileName }}</p>
