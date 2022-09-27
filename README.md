@@ -2,11 +2,15 @@
 
 Bienvenue sur Groupomania Social Network
 
+# SreenShots
+
+<img src="ImgReadm/Screenshot.png" width="200px">
+
 ## Description
 
 Stack utilisé : Node js et un serveur express pour l'API' / Vue js 3 pour le Front End
 
-1. Pour utiliser correctement l'api , veuillez clonez ce repository
+1. Veuillez clonez ce repository
 
 # GROUPOMANIA - front (vue 3)
 
@@ -30,11 +34,12 @@ Dans le dossier api, lancer le terminal et démarrer l'api, taper la commande su
 
 ## Base de données
 
-La base de donnée utliser est mongoo db avec compass pour une utilisation local, pour lancer votre base donnée :
+La base de donnée utliser est mongooDB Altas
 
-1. Dans le terminal taper ```mongosh````
-2. Lancer mongoo compass et connecter vous au serveur indiquer dans le terminal
-3. Dans votre dossier api, allez sur le fichier app.js et vérifier que le localhost de mongoo.connect sois le même que sur votre BDD et que le nom de la BDD aussi
+1. Crée une base de donnée sur mongooDB atlas
+2. Crée un fichier .env dans le dossier api, en ajoutant vos informations de connexion à la base de données (remplacer user Name et password pas vos informations): `MONGODB_USER = User name` `MONGODB_PASSWORD = password `
+3. Télécharger mongooDB compass, connectez vous à votre base de donnée mongooDB Atlas, en renseigant dans new connection votre URI `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
+4. Cliquez sur l'onglet collection en haut de votre page mongooDB compass et importer les fichiers de la collection users.json et publication.json
 
 # Utilisation
 
@@ -44,7 +49,7 @@ Pour s'inscrire sur le social network de Groupomania, il vous faut renseigner :
 2. Une adresse mail valide
 3. Un mot de passe
 
-Une fois connecté vous pouvez voir les publications des utilisateurs et publier au choix:
+Une fois connecté vous pouvez voir les publications des utilisateurs et publier:
 
 1. Une description + une image
 

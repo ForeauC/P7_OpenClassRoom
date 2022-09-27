@@ -5,20 +5,18 @@ const publicationRoutes = require('./routes/publication')
 const path = require('path') // Le module path fournit des utilitaires pour travailler avec les chemins de fichiers et de répertoires.
 const helmet = require('helmet') // Helmet aide à protéger votre application de certaines des vulnérabilités bien connues du Web en configurant de manière appropriée des en-têtes HTTP.
 const mongoSanitize = require('express-mongo-sanitize')
+const dotenv = require('dotenv').config()
 
 const app = express() // Permet de créer une application express
 
 // Connexion à la base de données MongoDB
-mongoose.connect('mongodb://localhost:27017/groupomania', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
-db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function () {
-    console.log('connecté à Mongoose')
-})
+mongoose
+    .connect(
+        `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.tkcupbt.mongodb.net/?retryWrites=true&w=majority`,
+        { useNewUrlParser: true, useUnifiedTopology: true }
+    )
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'))
 
 app.use(express.json()) // Intercepte toutes les requêtes qui contiennent du json et mettent à disposition le contenu sur l'objet requête dans req.body
 
