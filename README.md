@@ -44,7 +44,7 @@ Depuis le dossier api, installer node (si besoin), taper la commande suivante `n
 
 ## Lancer l'api
 
-Dans le dossier api, lancer le terminal et démarrer l'api, taper la commande suivante `npm start`
+Dans le dossier api, lancer le terminal et démarrer l'api, taper la commande suivante `node server`
 
 ## Base de données
 
@@ -52,5 +52,6 @@ La base de données utlisée est mongooDB Altas
 
 1. Créer une base de données sur mongooDB atlas
 2. Créer un fichier .env dans le dossier api, en ajoutant vos informations de connexion à la base de données (remplacer user Name et password par vos informations): `MONGODB_USER = User name` `MONGODB_PASSWORD = password `
-3. Télécharger mongooDB compass, connectez vous à votre base de données mongooDB Atlas, en renseigant dans new connection votre URI `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
-4. Si vous avez besoin d'importer des colllections , cliquez sur l'onglet collection en haut de votre page mongooDB compass et importez les fichiers de la collection users.json et publication.json
+3. Dans ce dossier .env rajouter aussi le token auth `MONGODB_TOKEN = token`
+4. Télécharger mongooDB compass, connectez vous à votre base de données mongooDB Atlas, en renseigant dans new connection votre URI `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
+5. Si vous avez besoin d'importer des colllections , cliquez sur l'onglet collection en haut de votre page mongooDB compass et importez les fichiers de la collection users.json et publication.json
